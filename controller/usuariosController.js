@@ -1,6 +1,6 @@
 import { pool } from '../database/connectionMySql.js';
 
-export const getUsuarios = async (req, res) => {
+const getUsuarios = async (req, res) => {
     try {
         const query = 'SELECT idUsuario, nombre, apellido, correoElectronico, contrasenia, idTipoUsuario, imagen, activo FROM usuarios WHERE activo';
         const [result] = await pool.query(query)
@@ -11,7 +11,7 @@ export const getUsuarios = async (req, res) => {
     }
 }
 
-export const getUsuarioById = async (req, res) => {
+const getUsuarioById = async (req, res) => {
     const { id } = req.params;
     const query = 'SELECT idUsuario, nombre, apellido, correoElectronico, contrasenia, idTipoUsuario, imagen, activo FROM usuarios WHERE idUsuario = ?';
     try {
@@ -26,7 +26,7 @@ export const getUsuarioById = async (req, res) => {
     }
 };
 
-export const addUsuario = async (req, res) => {
+const addUsuario = async (req, res) => {
     const { nombre, apellido, correoElectronico, contrasenia, idTipoUsuario, imagen, activo } = req.body;
     const query = 'INSERT INTO usuarios (nombre, apellido, correoElectronico, contrasenia, idTipoUsuario, imagen, activo) VALUES (?, ?, ?, ?, ?, ?, ?)';
     try {
@@ -38,7 +38,7 @@ export const addUsuario = async (req, res) => {
     }
 };
 
-export const deleteUsuario = async (req, res) => {
+const deleteUsuario = async (req, res) => {
     const { id } = req.params;
     const query = 'UPDATE usuarios SET activo = 0 WHERE idUsuario = ?';
     try {
@@ -52,3 +52,10 @@ export const deleteUsuario = async (req, res) => {
         res.status(500).json({ error: 'Error al eliminar el usuario' });
     }
 };
+
+export default {
+    getUsuarios,
+    getUsuarioById,
+    addUsuario,
+    deleteUsuario
+}

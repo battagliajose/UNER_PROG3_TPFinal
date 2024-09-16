@@ -1,11 +1,11 @@
 import express from 'express';
-import { getOficinas, getOficinaById, addOficina, deleteOficina} from '../controller/oficinasController.js';
+import oficinasController from '../controller/oficinasController.js';
 
 const oficinasRouter = express.Router();
 
-oficinasRouter.get('/', getOficinas);
-oficinasRouter.get('/:id', getOficinaById);
-oficinasRouter.post('/', addOficina);
-oficinasRouter.delete('/:id', deleteOficina);
+oficinasRouter.get('/', oficinasController.getOficinas);
+oficinasRouter.get('/:id', oficinasController.getOficinaById);
+oficinasRouter.post('/', oficinasController.addOficina);
+oficinasRouter.delete('/:id', oficinasController.deleteOficina);
 
 export default oficinasRouter;

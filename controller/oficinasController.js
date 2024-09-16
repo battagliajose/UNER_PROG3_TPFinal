@@ -1,6 +1,6 @@
 import { pool } from '../database/connectionMySql.js';
 
-export const getOficinas = async (req, res) => {
+const getOficinas = async (req, res) => {
     try {
         const query = 'SELECT idOficina, nombre, idReclamoTipo, activo FROM oficinas WHERE activo';
         const [result] = await pool.query(query);
@@ -11,7 +11,7 @@ export const getOficinas = async (req, res) => {
     }
 }
 
-export const getOficinaById = async (req, res) => {
+const getOficinaById = async (req, res) => {
     const { id } = req.params;
     try {
         const query = 'SELECT idOficina, nombre, idReclamoTipo, activo FROM oficinas WHERE idOficina = ?';
@@ -26,7 +26,7 @@ export const getOficinaById = async (req, res) => {
     }
 };
 
-export const addOficina = async (req, res) => {
+const addOficina = async (req, res) => {
     const { nombre, idReclamoTipo, activo } = req.body;
     try {
         const query = 'INSERT INTO oficinas (nombre, idReclamoTipo, activo) VALUES (?, ?, ?)';
@@ -38,7 +38,7 @@ export const addOficina = async (req, res) => {
     }
 };
 
-export const deleteOficina = async (req, res) => {
+const deleteOficina = async (req, res) => {
     const { id } = req.params;
     try {
         const query = 'UPDATE oficinas SET activo = 0 WHERE idOficina = ?';
@@ -52,3 +52,10 @@ export const deleteOficina = async (req, res) => {
         res.status(500).json({ error: 'Error al eliminar la oficina' });
     }
 };
+
+export default {
+    getOficinas,
+    getOficinaById,
+    addOficina,
+    deleteOficina
+}
