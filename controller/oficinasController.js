@@ -2,7 +2,7 @@ import { pool } from '../database/connectionMySql.js';
 
 export const getOficinas = async (req, res) => {
     try {
-        const query = 'SELECT idOficina, nombre, idReclamoTipo, activo FROM oficinas';
+        const query = 'SELECT idOficina, nombre, idReclamoTipo, activo FROM oficinas WHERE activo';
         const [result] = await pool.query(query);
         res.status(200).json(result);
     } catch (error) {
@@ -41,7 +41,7 @@ export const addOficina = async (req, res) => {
 export const deleteOficina = async (req, res) => {
     const { id } = req.params;
     try {
-        const query = 'DELETE FROM oficinas WHERE idOficina = ?';
+        const query = 'UPDATE oficinas SET activo = 0 WHERE idOficina = ?';
         const [result] = await pool.query(query, [id]);
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Oficina no encontrada' });

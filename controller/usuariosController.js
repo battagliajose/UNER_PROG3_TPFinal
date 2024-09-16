@@ -2,7 +2,7 @@ import { pool } from '../database/connectionMySql.js';
 
 export const getUsuarios = async (req, res) => {
     try {
-        const query = 'SELECT idUsuario, nombre, apellido, correoElectronico, contrasenia, idTipoUsuario, imagen, activo FROM usuarios';
+        const query = 'SELECT idUsuario, nombre, apellido, correoElectronico, contrasenia, idTipoUsuario, imagen, activo FROM usuarios WHERE activo';
         const [result] = await pool.query(query)
         res.status(200).json(result);
     } catch (error) {
@@ -40,7 +40,7 @@ export const addUsuario = async (req, res) => {
 
 export const deleteUsuario = async (req, res) => {
     const { id } = req.params;
-    const query = 'DELETE FROM usuarios WHERE idUsuario = ?';
+    const query = 'UPDATE usuarios SET activo = 0 WHERE idUsuario = ?';
     try {
         const [result] = await pool.query(query, [id]);
         if (result.affectedRows === 0) {
