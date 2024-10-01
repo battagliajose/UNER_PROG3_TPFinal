@@ -13,7 +13,7 @@ app.use(express.json());
 app.use('/oficinas', oficinasRouter);
 app.use('/usuarios', usuariosRouter);
 
-const puerto = process.env.PUERTO;
+const puerto = process.env.PUERTO || 3000;
 
 app.listen(puerto, () => {
     console.log(`Estoy escuchando en ${puerto}`);
