@@ -53,9 +53,44 @@ const deleteOficina = async (req, res) => {
     }
 };
 
+const updateOficina = async (req, res) => {
+    try{
+        const { id } = req.params;
+        const { nombre, idReclamoTipo, activo } = req.body;
+
+        if (!nombre || !idReclamoTipo || !activo) { // Si activo es 0 va a dar error
+            return res.status(404).json({
+                mensaje: "Faltan datos, por favor verifique."    
+            })
+        }
+
+        // ToDo - Verificar que idReclamoTipo sea un valor valido y activo sea 0 ó 1.
+        // if (activo === undefined || activo === null) o verificar el valor? activo === 0 o activo === 1
+
+        const sql = 'UPDATE oficinas SET nombre = ? , idReclamoTipo = ?, activo = ?  WHERE idOFicina = ?';
+        const [result] = await pool.query(sql, [nombre, idReclamoTipo, activo, id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                mensaje: "No se pudo modificar."    
+            })
+        }
+        
+        res.status(200).json({
+            mensaje: "Oficina modificada"
+        });
+
+    }catch(error){
+        res.status(500).json({
+            mensaje: "Error interno."
+        })
+    }
+};
+
 export default {
     getOficinas,
     getOficinaById,
     addOficina,
-    deleteOficina
+    deleteOficina,
+    updateOficina
 }

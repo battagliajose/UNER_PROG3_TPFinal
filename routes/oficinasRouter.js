@@ -7,5 +7,6 @@ oficinasRouter.get('/', oficinasController.getOficinas);
 oficinasRouter.get('/:id', oficinasController.getOficinaById);
 oficinasRouter.post('/', oficinasController.addOficina);
 oficinasRouter.delete('/:id', oficinasController.deleteOficina);
+oficinasRouter.patch('/:id', oficinasController.updateOficina);
 
 export default oficinasRouter;

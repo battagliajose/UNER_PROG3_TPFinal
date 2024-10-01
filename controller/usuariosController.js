@@ -53,9 +53,43 @@ const deleteUsuario = async (req, res) => {
     }
 };
 
+const updateUsuario = async (req, res) => {
+    try{
+        const { id } = req.params;
+        const { nombre, apellido, activo } = req.body;
+
+        if (!nombre || !idReclamoTipo || !activo) {
+            return res.status(404).json({
+                mensaje: "Faltan datos, por favor verifique."    
+            })
+        }
+
+        // ToDo - Verificar que idReclamoTipo sea un valor valido y activo sea 0 ó 1.
+
+        const sql = 'UPDATE oficinas SET nombre = ? , idReclamoTipo = ?, activo = ?  WHERE idOFicina = ?';
+        const [result] = await pool.query(sql, [nombre, idReclamoTipo, activo, id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                mensaje: "No se pudo modificar."    
+            })
+        }
+        
+        res.status(200).json({
+            mensaje: "Oficina modificada"
+        });
+
+    }catch(error){
+        res.status(500).json({
+            mensaje: "Error interno."
+        })
+    }
+};
+
 export default {
     getUsuarios,
     getUsuarioById,
     addUsuario,
-    deleteUsuario
+    deleteUsuario,
+    updateUsuario
 }
