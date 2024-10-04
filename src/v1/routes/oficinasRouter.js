@@ -1,7 +1,9 @@
 import express from 'express';
-import oficinasController from '../controller/oficinasController.js';
+import OficinasController from '../../controllers/oficinasController.js';
 
 const oficinasRouter = express.Router();
+
+const oficinasController = new OficinasController();
 
 oficinasRouter.get('/', oficinasController.getOficinas);
 oficinasRouter.get('/:id', oficinasController.getOficinaById);

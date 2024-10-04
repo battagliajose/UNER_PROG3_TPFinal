@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import oficinasRouter from './routes/oficinasRouter.js'
-import usuariosRouter from './routes/usuariosRouter.js'
+import oficinasRouter from './v1/routes/oficinasRouter.js'
+import usuariosRouter from './v1/routes/usuariosRouter.js'
 
 dotenv.config();
 
