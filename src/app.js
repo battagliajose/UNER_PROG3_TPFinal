@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 
 import oficinasRouter from './v1/routes/oficinasRouter.js'
 import usuariosRouter from './v1/routes/usuariosRouter.js'
+import usuariosTipoRouter from './v1/router/usuariosTipoRouter.js'
 
 import validateContentType from './middlewares/validateContentType.js';
 
@@ -16,6 +17,7 @@ app.use(validateContentType);
 //Routes
 app.use('/oficinas', oficinasRouter);
 app.use('/usuarios', usuariosRouter);
+app.use('/usuariosTipo',usuariosTipoRouter);
 
 const puerto = process.env.PUERTO || 3000;
 
