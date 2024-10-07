@@ -5,6 +5,8 @@ import oficinasRouter from './v1/routes/oficinasRouter.js'
 import usuariosRouter from './v1/routes/usuariosRouter.js'
 import usuariosTipoRouter from './v1/routes/usuariosTipoRouter.js'
 import usuariosOficinaRouter from './v1/routes/usuariosOficinaRouter.js'
+import reclamosEstadoRouter from './v1/routes/reclamosEstadoRouter.js'
+import reclamosTipoRouter from './v1/routes/reclamosTipoRouter.js'
 
 import validateContentType from './middlewares/validateContentType.js';
 
@@ -20,7 +22,9 @@ app.use(validateContentType);
 app.use('/oficinas', oficinasRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/usuariosTipo',usuariosTipoRouter);
-app.use('/usuariosOficina',usuariosOficinaRouter)
+app.use('/usuariosOficina',usuariosOficinaRouter);
+app.use('/reclamosestado', reclamosEstadoRouter );
+app.use('/reclamostipo', reclamosTipoRouter );
 
 const puerto = process.env.PUERTO || 3000;
 
