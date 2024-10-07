@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 import oficinasRouter from './v1/routes/oficinasRouter.js'
 import usuariosRouter from './v1/routes/usuariosRouter.js'
-import usuariosTipoRouter from './v1/router/usuariosTipoRouter.js'
+import usuariosTipoRouter from './v1/routes/usuariosTipoRouter.js'
 
 import validateContentType from './middlewares/validateContentType.js';
 

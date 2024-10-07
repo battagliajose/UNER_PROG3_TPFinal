@@ -1,9 +1,9 @@
 import express from 'express';
-import usuariosTipoController from '../../controllers/usuariosController.js';
+import UsuariosTipoController from '../../controllers/usuariosTipoController.js';
 
 const usuariosTipoRouter = express.Router();
 
-const usuariosTipoController = new usuariosTipoController();
+const usuariosTipoController = new UsuariosTipoController();
 
 usuariosTipoRouter.get('/', usuariosTipoController.getUsuariosTipo);
 usuariosTipoRouter.get('/:id', usuariosTipoController.getUsuariosTipoId);
