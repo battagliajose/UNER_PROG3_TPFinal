@@ -1,3 +1,4 @@
 node_modules/
 .env
-api-test.http
+api-test-UsuariosTipo
+api-test-UsuariosOficina
