@@ -16,7 +16,6 @@ export default class ReclamosTipoController {
         }
     }
     
-
     getReclamosTipoById = async (req, res) => {
         const { id } = req.params;
         try {

@@ -6,17 +6,6 @@ export default class ReclamosEstadoController {
         this.reclamosEstadoService = new ReclamosEstadoService();
     }
 
-    /*
-    getReclamosEstado = async (req, res) => {
-        try {
-            const result = await this.reclamosEstadoService.getreclamosEstado();
-            res.status(200).json(result);
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({ error: 'Error al obtener reclamos Estado' });
-        }
-    }
-*/
     getReclamosEstado = async (req, res) => {
         try {
             const result = await this.reclamosEstadoService.getReclamosEstado();
@@ -27,7 +16,6 @@ export default class ReclamosEstadoController {
         }
     }
     
-
     getReclamosEstadoById = async (req, res) => {
         const { id } = req.params;
         try {
