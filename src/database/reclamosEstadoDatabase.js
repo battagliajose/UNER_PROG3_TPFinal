@@ -72,29 +72,3 @@ export default class ReclamosEstadoDatabase {
         }
     };
 }
-
-    /*
-    updateReclamosEstado = async (id, reclamoEstado) => {
-        const campos = Object.keys(reclamoEstado);
-        const valores = campos.map((campo) => reclamoEstado[campo]);
-        const consulta = `UPDATE reclamos_estado SET ${campos
-        .map((campo) => `${campo} = ?`)
-        .join(", ")} WHERE idReclamoEstado = ?`;
-    
-        try {
-        const [result] = await pool.query(consulta, [...valores, id]);
-        if (result.affectedRows > 0) {
-            const [reclamosEstadoActualizado] = await pool.query(
-            "SELECT * FROM reclamos_estado WHERE idReclamoEstado = ?",
-            [id]
-            );
-            return reclamosEstadoActualizado[0];
-        } else {
-            return null;
-        }
-        } catch (error) {
-        console.error("Error al actualizar la Reclamo Estado:", error);
-        throw error;
-        }
-    };
-    */
