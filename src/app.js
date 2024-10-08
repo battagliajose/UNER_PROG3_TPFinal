@@ -7,7 +7,7 @@ import usuariosTipoRouter from './v1/routes/usuariosTipoRouter.js'
 import usuariosOficinaRouter from './v1/routes/usuariosOficinaRouter.js'
 import reclamosEstadoRouter from './v1/routes/reclamosEstadoRouter.js'
 import reclamosTipoRouter from './v1/routes/reclamosTipoRouter.js'
-
+import reclamosRouter from './v1/routes/reclamosRouter.js'
 import validateContentType from './middlewares/validateContentType.js';
 
 
@@ -25,6 +25,8 @@ app.use('/usuariosTipo',usuariosTipoRouter);
 app.use('/usuariosOficina',usuariosOficinaRouter);
 app.use('/reclamosestado', reclamosEstadoRouter );
 app.use('/reclamostipo', reclamosTipoRouter );
+app.use('/reclamos', reclamosRouter);
+
 
 const puerto = process.env.PUERTO || 3000;
 
