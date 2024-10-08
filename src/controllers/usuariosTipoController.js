@@ -6,11 +6,7 @@ export default class usuariosTipoController {
         this.usuariosTipoService = new usuariosTipoService();
     }
 
-    /**
-     * Maneja la solicitud para obtener todos los tipos de usuarios.
-     * @param {Object} req - Objeto de solicitud.
-     * @param {Object} res - Objeto de respuesta.
-     */
+    
     getUsuariosTipo = async (req, res) => {
         try {
             const result = await this.usuariosTipoService.getUsuariosTipo();
@@ -21,11 +17,7 @@ export default class usuariosTipoController {
         }
     }
 
-    /**
-     * Maneja la solicitud para obtener un tipo de usuario por ID.
-     * @param {Object} req - Objeto de solicitud.
-     * @param {Object} res - Objeto de respuesta.
-     */
+    
     getUsuariosTipoId = async (req, res) => {
         const { id } = req.params;
         try {
@@ -40,11 +32,7 @@ export default class usuariosTipoController {
         }
     };
 
-    /**
-     * Maneja la solicitud para agregar un nuevo tipo de usuario.
-     * @param {Object} req - Objeto de solicitud.
-     * @param {Object} res - Objeto de respuesta.
-     */
+    
     addUsuariosTipo = async (req, res) => {
         const { descripcion, activo } = req.body;
         try {
@@ -60,11 +48,7 @@ export default class usuariosTipoController {
         }
     };
 
-    /**
-     * Maneja la solicitud para eliminar un tipo de usuario por ID.
-     * @param {Object} req - Objeto de solicitud.
-     * @param {Object} res - Objeto de respuesta.
-     */
+   
     deleteUsuariosTipo = async (req, res) => {
         const { id } = req.params;
         try {
@@ -79,11 +63,7 @@ export default class usuariosTipoController {
         }
     };
 
-    /**
-     * Maneja la solicitud para actualizar un tipo de usuario por ID.
-     * @param {Object} req - Objeto de solicitud.
-     * @param {Object} res - Objeto de respuesta.
-     */
+   
     updateUsuariosTipo = async (req, res) => {
         try {
             const { id } = req.params;
