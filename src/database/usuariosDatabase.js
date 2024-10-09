@@ -3,15 +3,16 @@ import { pool } from './connectionMySql.js';
 export default class UsuariosDataBase {
     getUsuarios = async () => {
         try {
-            const query = `SELECT   idUsuario,
-                                    nombre, 
-                                    apellido, 
-                                    correoElectronico, 
-                                    contrasenia, 
-                                    idUsuarioTipo, 
-                                    imagen, 
-                                    activo FROM usuarios 
-                                    WHERE activo`;
+            const query = `SELECT   u.idUsuario,
+                                    u.nombre, 
+                                    u.apellido, 
+                                    u.correoElectronico,                                     
+                                    ut.descripcion as tipoUsuario, 
+                                    u.imagen, 
+                                    u.activo 
+                                    FROM usuarios as u inner join usuarios_tipo ut 
+                                    ON u.idTipoUsuario=ut.idUsuarioTipo
+                                    WHERE u.activo`;
             const [result] = await pool.query(query)
             return result;
         } catch (error) {
