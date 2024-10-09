@@ -20,13 +20,28 @@ export default class UsuariosController {
         const { id } = req.params;
         try {
             const result = await this.usuariosService.getUsuarioById(id);
+            const oficinas = await this.usuariosService.getOficinasUsuarioById(id);
             if (result.length === 0) {
                 return res.status(404).json({ error: 'Usuario no encontrado' });
+            }
+            res.status(200).json({...result[0], oficinas : oficinas || []});
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Error al obtener el usuario' });
+        }
+    };
+
+    getOficinasUsuarioById = async (req, res) => {
+        const { id } = req.params;
+        try {
+            const result = await this.usuariosService.getOficinasUsuarioById(id);
+            if (result.length === 0) {
+                return res.status(404).json({ error: 'Oficinas del Usuario no encontradas' });
             }
             res.status(200).json(result[0]);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: 'Error al obtener el usuario' });
+            res.status(500).json({ error: 'Error al obtener las oficinas del usuario' });
         }
     };
 
