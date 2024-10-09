@@ -11,7 +11,7 @@ export default class UsuariosDataBase {
                                     u.imagen, 
                                     u.activo 
                                     FROM usuarios as u inner join usuarios_tipo ut 
-                                    ON u.idTipoUsuario=ut.idUsuarioTipo
+                                    ON u.idUsuarioTipo=ut.idUsuarioTipo
                                     WHERE u.activo`;
             const [result] = await pool.query(query)
             return result;

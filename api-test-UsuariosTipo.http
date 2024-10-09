@@ -3,11 +3,6 @@
 @idOficina = 1
 
 
-GET  http://localhost:3000/usuariosOficinas/
-Accept: application/json
-
-
-
 GET http://localhost:3000/usuariosTipo
 Accept: application/json
 
