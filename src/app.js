@@ -22,7 +22,7 @@ app.use(validateContentType);
 app.use('/oficinas', oficinasRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/usuariosTipo',usuariosTipoRouter);
-app.use('/usuariosOficina',usuariosOficinaRouter);
+app.use('/usuariosOficinas',usuariosOficinaRouter);
 app.use('/reclamosestado', reclamosEstadoRouter );
 app.use('/reclamostipo', reclamosTipoRouter );
 app.use('/reclamos', reclamosRouter);

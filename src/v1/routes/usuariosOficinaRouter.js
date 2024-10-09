@@ -1,14 +1,14 @@
 import express from 'express';
-import UsuariosOficinaController from '../../controllers/usuariosOficinaController.js';
+import UsuariosOficinasController from '../../controllers/usuariosOficinasController.js';
 
-const usuariosOficinaRouter = express.Router();
+const usuariosOficinasRouter = express.Router();
 
-const usuariosOficinaController = new UsuariosOficinaController();
+const usuariosOficinasController = new UsuariosOficinasController();
 
-usuariosOficinaRouter.get('/', usuariosOficinaController.getUsuariosOficina);
-usuariosOficinaRouter.get('/:id', usuariosOficinaController.getUsuariosOficinaId);
-usuariosOficinaRouter.post('/', usuariosOficinaController.addUsuariosOficina);
-usuariosOficinaRouter.delete('/:id', usuariosOficinaController.deleteUsuariosOficina);
-usuariosOficinaRouter.patch('/:id', usuariosOficinaController.updateUsuariosOficina);
+usuariosOficinasRouter.get('/', usuariosOficinasController.getUsuariosOficinas);
+usuariosOficinasRouter.get('/:id', usuariosOficinasController.getUsuariosOficinasId);
+usuariosOficinasRouter.post('/', usuariosOficinasController.addUsuariosOficinas);
+usuariosOficinasRouter.delete('/:id', usuariosOficinasController.deleteUsuariosOficinas);
+usuariosOficinasRouter.patch('/:id', usuariosOficinasController.updateUsuariosOficinas);
 
-export default usuariosOficinaRouter;
+export default usuariosOficinasRouter;

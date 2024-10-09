@@ -1,14 +1,14 @@
-import usuariosOficinaService from '../services/usuariosOficinaService.js';
+import UsuariosOficinasService from '../services/usuariosOficinasService.js';
 
-export default class usuariosOficinaController {
+export default class usuariosOficinasController {
 
     constructor () {
-        this.usuariosOficinaService = new usuariosOficinaService();
+        this.usuariosOficinasService = new UsuariosOficinasService();
     }
 
-    getUsuariosOficina = async (req, res) => {
+    getUsuariosOficinas = async (req, res) => {
         try {
-            const result = await this.usuariosOficinaService.getUsuariosOficina();
+            const result = await this.usuariosOficinasService.getUsuariosOficinas();
             res.status(200).json(result);
         } catch (error) {
             console.log(error);
@@ -16,10 +16,10 @@ export default class usuariosOficinaController {
         }
     }
 
-    getUsuariosOficinaId = async (req, res) => {
+    getUsuariosOficinasId = async (req, res) => {
         const { id } = req.params;
         try {
-            const result = await this.usuariosOficinaService.getUsuariosOficinaId(id);
+            const result = await this.usuariosOficinasService.getUsuariosOficinasId(id);
             if (result.length === 0) {
                 return res.status(404).json({ error: 'Oficina no encontrada' });
             }
@@ -30,10 +30,10 @@ export default class usuariosOficinaController {
         }
     };
 
-    addUsuariosOficina = async (req, res) => {
+    addUsuariosOficinas = async (req, res) => {
         const { idUsuario, idOficina ,activo } = req.body;
         try {
-            const result = await this.usuariosOficinaService.addUsuariosOficina({idUsuario, idOficina ,activo});
+            const result = await this.usuariosOficinasService.addUsuariosOficinas({idUsuario, idOficina ,activo});
             if (result.affectedRows > 0) {
                 res.status(201).json({ id: result.insertId, idUsuario, idOficina ,activo });
             } else {
@@ -45,10 +45,10 @@ export default class usuariosOficinaController {
         }
     };
 
-    deleteUsuariosOficina = async (req, res) => {
+    deleteUsuariosOficinas = async (req, res) => {
         const { id } = req.params;
         try {
-            const result = await this.usuariosOficinaService.deleteUsuariosOficina(id);
+            const result = await this.usuariosOficinasService.deleteUsuariosOficinas(id);
             if (result.affectedRows === 0) {
                 return res.status(404).json({ error: 'Oficina no encontrada' });
             }
@@ -59,11 +59,11 @@ export default class usuariosOficinaController {
         }
     };
 
-    updateUsuariosOficina = async (req, res) => {
+    updateUsuariosOficinas = async (req, res) => {
         try {
             const { id } = req.params;
             const campos = req.body;
-            const result = await this.usuariosOficinaService.updateUsuariosOficina(id, campos);
+            const result = await this.usuariosOficinasService.updateUsuariosOficinas(id, campos);
 
             if (result.affectedRows === 0) {
                 return res.status(404).json({

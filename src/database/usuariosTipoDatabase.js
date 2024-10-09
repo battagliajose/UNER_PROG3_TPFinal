@@ -40,7 +40,7 @@ export default class UsuariosTipoDatabase {
     addUsuariosTipo = async (nuevaUsuarioTipo) => {
         const { descripcion, activo } = nuevaUsuarioTipo;
         try {
-            const query = 'INSERT INTO usuarios_Tipo (descripcion, activo) VALUES (?, ?)';
+            const query = 'INSERT INTO usuarios_tipo (descripcion, activo) VALUES (?, ?)';
             const [result] = await pool.query(query, [descripcion, activo]);
             return result;
         } catch (error) {
@@ -56,7 +56,7 @@ export default class UsuariosTipoDatabase {
      */
     deleteUsuariosTipo = async (id) => {
         try {
-            const query = 'UPDATE usuarios_Tipo SET activo = 0 WHERE idUsuariosTipo = ?';
+            const query = 'UPDATE usuarios_tipo SET activo = 0 WHERE idUsuarioTipo = ?';
             const [result] = await pool.query(query, [id]);
             return result;
         } catch (error) {
@@ -74,15 +74,15 @@ export default class UsuariosTipoDatabase {
     updateUsuariosTipo = async (id, usuariosTipo) => {
         const campos = Object.keys(usuariosTipo);
         const valores = campos.map((campo) => usuariosTipo[campo]);
-        const consulta = `UPDATE usuarios_Tipo SET ${campos
+        const consulta = `UPDATE usuarios_tipo SET ${campos
         .map((campo) => `${campo} = ?`)
-        .join(", ")} WHERE idUsuariosTipo = ?`;
+        .join(", ")} WHERE idUsuarioTipo = ?`;
     
         try {
             const [result] = await pool.query(consulta, [...valores, id]);
             if (result.affectedRows > 0) {
                 const [usuariosTipoActualizado] = await pool.query(
-                "SELECT * FROM usuariosTipo WHERE idUsuariosTipo = ?",
+                "SELECT * FROM usuarios_tipo WHERE idUsuarioTipo = ?",
                 [id]
                 );
                 return usuariosTipoActualizado[0];
