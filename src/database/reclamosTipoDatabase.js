@@ -71,31 +71,3 @@ export default class ReclamosTipoDatabase {
         }
     };
 }
-
-
-
-/*
-    updateReclamosTipo = async (id, reclamoTipo) => {
-        const campos = Object.keys(reclamoTipo);
-        const valores = campos.map((campo) => reclamoTipo[campo]);
-        const consulta = `UPDATE reclamos_tipo SET ${campos
-        .map((campo) => `${campo} = ?`)
-        .join(", ")} WHERE idReclamoTipo = ?`;
-    
-        try {
-        const [result] = await pool.query(consulta, [...valores, id]);
-        if (result.affectedRows > 0) {
-            const [reclamosTipoActualizado] = await pool.query(
-            "SELECT * FROM reclamos_tipo WHERE idReclamoTipo = ?",
-            [id]
-            );
-            return reclamosTipoActualizado[0];
-        } else {
-            return null;
-        }
-        } catch (error) {
-        console.error("Error al actualizar la Reclamo Tipo:", error);
-        throw error;
-        }
-    };
-    */

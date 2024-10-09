@@ -1,6 +1,6 @@
 import ReclamosDatabase from "../database/reclamosDatabase.js";
 
-export default class ReclamosServices {
+export default class ReclamosService {
 
     constructor() {
         this.reclamosDatabase = new ReclamosDatabase();
