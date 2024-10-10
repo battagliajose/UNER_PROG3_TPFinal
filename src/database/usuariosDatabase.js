@@ -3,7 +3,16 @@ import { pool } from './connectionMySql.js';
 export default class UsuariosDataBase {
     getUsuarios = async () => {
         try {
-            const query = 'SELECT idUsuario, nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo FROM usuarios WHERE activo';
+            const query = `SELECT   u.idUsuario,
+                                    u.nombre, 
+                                    u.apellido, 
+                                    u.correoElectronico,                                     
+                                    ut.descripcion as tipoUsuario, 
+                                    u.imagen, 
+                                    u.activo 
+                                    FROM usuarios as u inner join usuarios_tipo ut 
+                                    ON u.idUsuarioTipo=ut.idUsuarioTipo
+                                    WHERE u.activo`;
             const [result] = await pool.query(query)
             return result;
         } catch (error) {
@@ -14,7 +23,36 @@ export default class UsuariosDataBase {
 
     getUsuarioById = async (id) => {
         try {
-            const query = 'SELECT idUsuario, nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo FROM usuarios WHERE idUsuario = ?';
+            //const query = 'SELECT idUsuario, nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo FROM usuarios WHERE idUsuario = ?';
+            const query = `SELECT   u.idUsuario,
+                                    nombre,
+                                    apellido,
+                                    correoElectronico,
+                                    contrasenia,
+                                    u.idUsuarioTipo,
+                                    ut.descripcion as tipoUsuario,
+                                    imagen,
+                                    u.activo
+                                 FROM usuarios u 
+                                 inner join usuarios_tipo ut 
+                                 ON u.idUsuarioTipo = ut.idUsuarioTipo 
+                                 WHERE idUsuario = ?`
+            const [result] = await pool.query(query, [id]);
+            return result;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    };
+
+    getOficinasUsuarioById = async (id) => {
+        try {
+            const query = `SELECT   o.idOficina as id,
+                                    o.nombre as oficina
+                                 FROM oficinas o 
+                                 INNER JOIN usuarios_oficinas uo 
+                                 ON o.idOficina = uo.idOficina 
+                                 WHERE uo.idUsuario = ?;`
             const [result] = await pool.query(query, [id]);
             return result;
         } catch (error) {

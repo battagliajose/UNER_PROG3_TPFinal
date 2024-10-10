@@ -1,0 +1,34 @@
+### Obtener todos los tipos de oficinas
+@idUsuariosOficina=1
+
+GET http://localhost:3000/usuariosOficina
+Accept: application/json
+
+### Obtener una oficina por ID
+GET http://localhost:3000/usuariosOficina/{{idUsuariosOficina}}
+Accept: application/json
+
+### Agregar una nueva oficina
+POST http://localhost:3000/usuariosOficina
+Content-Type: application/json
+
+{
+  "idUsuario": 2,
+  "idOficina": 2,
+  "activo": 1
+
+}
+
+### Actualizar una oficina por ID
+PATCH http://localhost:3000/usuariosOficina/{{idUsuariosOficina}}
+Content-Type: application/json
+
+{
+  "idUsuario": 1,
+  "idOficina": 3,
+  "activo": 1
+
+}
+
+### Eliminar una oficina por ID
+DELETE http://localhost:3000/usuariosOficina/{{idUsuariosOficina}}

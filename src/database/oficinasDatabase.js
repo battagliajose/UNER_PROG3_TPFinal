@@ -3,7 +3,9 @@ import { pool } from './connectionMySql.js';
 export default class OficinasDatabase {
     getOficinas = async () => {
         try {
-            const query = 'SELECT idOficina, nombre, idReclamoTipo, activo FROM oficinas WHERE activo';
+            const query = `SELECT o.idOficina, o.nombre, rt.descripcion, o.activo FROM oficinas as o
+                            INNER JOIN reclamos_tipo as rt ON o.idReclamoTipo = rt.idReclamoTipo
+                            WHERE o.activo`;
             const [result] = await pool.query(query);
             return result;
         } catch (error) {
@@ -14,7 +16,9 @@ export default class OficinasDatabase {
 
     getOficinaById = async (id) => {
         try {
-            const query = 'SELECT idOficina, nombre, idReclamoTipo, activo FROM oficinas WHERE idOficina = ?';
+            const query = `SELECT o.idOficina, o.nombre, rt.descripcion, o.activo FROM oficinas as o
+                            INNER JOIN reclamos_tipo as rt ON o.idReclamoTipo = rt.idReclamoTipo
+                            WHERE idOficina = ?`;
             const [result] = await pool.query(query, [id]);
             return result;
         } catch (error) {
