@@ -1,18 +1,29 @@
-Agregar password del MySQL y guardar como .env
+<img src="https://secretariaextension.uner.edu.ar/wp-content/uploads/2021/04/logo-original-maschico.png" alt="">
 
-PUERTO = 3000
+# Tecnicatura Universitaria en Desarrollo Web
 
-HOST = 'localhost'
+## Trabajo Práctico de Programación 3
+    
+### 1º Entrega
+    
+### Integrantes:
+- Luis Sanchez
+- José Battaglia
+- Cristian Seltenreich
 
-MYSQLPORT = 3306
+### Agregar password del MySQL y guardar como .env
+``` bash
+    PUERTO = 3000
+    HOST = 'localhost'
+    MYSQLPORT = 3306
+    MYSQLUSER = 'root'
+    MYSQLPASS = ''
+    DATABASE = 'reclamos'
+```
 
-MYSQLUSER = 'root'
-
-MYSQLPASS = ''
-
-DATABASE = 'reclamos'
-
-Ejecutar con:
+## Ejecutar con:
+``` bash
     NPM RUN start : "node ./src/app.js",
     NPM RUN dev   : "nodemon ./src/app.js",
     NPM RUN watch : "node --watch ./src/app.js",
+```
