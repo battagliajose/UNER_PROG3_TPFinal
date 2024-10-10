@@ -3,17 +3,21 @@ import { pool } from './connectionMySql.js';
 export default class ReclamosDatabase {
     getReclamos = async () => {
         try {
-            const query = `SELECT   idReclamo,
-                                    asunto,
-                                    descripcion,
-                                    fechaCreado,
-                                    fechaFinalizado,
-                                    fechaCancelado,
-                                    idReclamoEstado,
-                                    idReclamoTipo,
-                                    idUsuarioCreador,
-                                    idUsuarioFinalizador
-                                FROM reclamos`;
+            const query = `SELECT   r.idReclamo,
+                                    r.asunto,
+                                    r.descripcion,
+                                    r.fechaCreado,
+                                    r.fechaFinalizado,
+                                    r.fechaCancelado,
+                                    re.descripcion,
+                                    rt.descripcion,
+                                    uc.nombre AS CreadorUsuario,
+                                    uf.nombre AS FinalizaUsuario
+                                FROM reclamos as r
+                                LEFT JOIN reclamos_estado as re ON r.idReclamoEstado = re.idReclamoEstado
+                                LEFT JOIN reclamos_tipo as rt ON r.idReclamoTipo = rt.idReclamoTipo
+                                LEFT JOIN usuarios as uc ON r.idUsuarioCreador = uc.idUsuario 
+                                LEFT JOIN usuarios as uf ON r.idUsuarioFinalizador = uf.idUsuario`;
             const [result] = await pool.query(query);
             return result;
         } catch (error) {
@@ -24,17 +28,21 @@ export default class ReclamosDatabase {
 
     getReclamoById = async (id) => {
         try {
-            const query = `SELECT   idReclamo,
-                                    asunto,
-                                    descripcion,
-                                    fechaCreado,
-                                    fechaFinalizado,
-                                    fechaCancelado,
-                                    idReclamoEstado,
-                                    idReclamoTipo,
-                                    idUsuarioCreador,
-                                    idUsuarioFinalizador
-                                FROM reclamos
+            const query = `SELECT   r.idReclamo,
+                                    r.asunto,
+                                    r.descripcion,
+                                    r.fechaCreado,
+                                    r.fechaFinalizado,
+                                    r.fechaCancelado,
+                                    re.descripcion,
+                                    rt.descripcion,
+                                    uc.nombre AS CreadorUsuario,
+                                    uf.nombre AS FinalizaUsuario
+                                FROM reclamos as r
+                                LEFT JOIN reclamos_estado as re ON r.idReclamoEstado = re.idReclamoEstado
+                                LEFT JOIN reclamos_tipo as rt ON r.idReclamoTipo = rt.idReclamoTipo
+                                LEFT JOIN usuarios as uc ON r.idUsuarioCreador = uc.idUsuario 
+                                LEFT JOIN usuarios as uf ON r.idUsuarioFinalizador = uf.idUsuario
                                 WHERE idReclamo = ?`;
             const [result] = await pool.query(query, [id]);
             return result;
