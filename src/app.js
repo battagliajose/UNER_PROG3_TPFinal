@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import morgan from 'morgan';
 
 import oficinasRouter from './v1/routes/oficinasRouter.js';
 import usuariosRouter from './v1/routes/usuariosRouter.js';
@@ -15,6 +16,7 @@ dotenv.config();
 
 const app = express();
 
+app.use(morgan('combined'));
 app.use(express.json());
 app.use(validateContentType);
 
