@@ -23,7 +23,6 @@ export default class UsuariosDataBase {
 
     getUsuarioById = async (id) => {
         try {
-            //const query = 'SELECT idUsuario, nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo FROM usuarios WHERE idUsuario = ?';
             const query = `SELECT   u.idUsuario,
                                     nombre,
                                     apellido,
@@ -64,7 +63,7 @@ export default class UsuariosDataBase {
     addUsuario = async (nuevoUsuario) => {
         const {nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo} = nuevoUsuario;
         try {
-            const query = 'INSERT INTO usuarios (nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo) VALUES (?, ?, ?, ?, ?, ?, ?)';
+            const query = 'INSERT INTO usuarios (nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo) VALUES (?, ?, ?, SHA2(?, 256), ?, ?, ?)';
             const [result] = await pool.query(query, [nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo]);
             return ({ id: result.insertId, nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo });
         } catch (error) {
