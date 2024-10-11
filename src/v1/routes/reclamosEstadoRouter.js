@@ -20,10 +20,4 @@ reclamosEstadoRouter
 
 // Exporto el router para que pueda ser utilizado en la aplicación.
 export default reclamosEstadoRouter; 
-/*
-reclamosEstadoRouter.get('/', reclamosEstadoController.getReclamosEstado); 
-reclamosEstadoRouter.get('/:id', reclamosEstadoController.getReclamosEstadoById);
-reclamosEstadoRouter.post('/', reclamosEstadoController.addReclamosEstado); 
-reclamosEstadoRouter.delete('/:id', reclamosEstadoController.deleteReclamosEstado);
-reclamosEstadoRouter.patch('/:id', reclamosEstadoController.updateReclamosEstado); 
-*/
+
