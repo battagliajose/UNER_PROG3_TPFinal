@@ -10,11 +10,20 @@ const reclamosEstadoRouter = express.Router();
 const reclamosEstadoController = new ReclamosEstadoController(); 
 
 // Defino la rutas GET, POST, DELETE y PATCH para los CRUD
+
+reclamosEstadoRouter
+    .get('/', reclamosEstadoController.getReclamosEstado)
+    .get('/:id', reclamosEstadoController.getReclamosEstadoById)
+    .post('/', reclamosEstadoController.addReclamosEstado) 
+    .delete('/:id', reclamosEstadoController.deleteReclamosEstado)
+    .patch('/:id', reclamosEstadoController.updateReclamosEstado); 
+
+// Exporto el router para que pueda ser utilizado en la aplicación.
+export default reclamosEstadoRouter; 
+/*
 reclamosEstadoRouter.get('/', reclamosEstadoController.getReclamosEstado); 
 reclamosEstadoRouter.get('/:id', reclamosEstadoController.getReclamosEstadoById);
 reclamosEstadoRouter.post('/', reclamosEstadoController.addReclamosEstado); 
 reclamosEstadoRouter.delete('/:id', reclamosEstadoController.deleteReclamosEstado);
 reclamosEstadoRouter.patch('/:id', reclamosEstadoController.updateReclamosEstado); 
-
-// Exporto el router para que pueda ser utilizado en la aplicación.
-export default reclamosEstadoRouter; 
+*/
