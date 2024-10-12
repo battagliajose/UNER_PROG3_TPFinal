@@ -3,7 +3,7 @@
 @idOficina = 1
 
 
-GET http://localhost:3000/reclamos
+GET http://localhost:3000/usuariosTipo
 Accept: application/json
 
 ### Obtener un tipo de usuario por ID
