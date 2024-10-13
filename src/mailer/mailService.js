@@ -26,8 +26,9 @@ export default class EmailService {
         // Cargar la plantilla
         const templatePath = path.join(__dirname, '../mailer/template/enviosCorreo.hbs'); 
         const templateSource = fs.readFileSync(templatePath, 'utf-8');
+        
         const template = handlebars.compile(templateSource);
-
+       
         // Renderizar la plantilla con los datos
         const htmlToSend = template(templateData);
 

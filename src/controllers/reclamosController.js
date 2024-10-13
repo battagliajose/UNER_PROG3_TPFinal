@@ -106,7 +106,15 @@ export default class ReclamosController {
                 await this.emailService.sendEmail(
                     'luisfelipe782006@gmail.com', 
                     'Estado del Reclamo Actualizado',
-                    `El reclamo con ID ${id} ha sido actualizado.`
+                    //Contenido del correo
+                    {
+                        "asunto":"Notificación de Reclamos",
+                        "nombre":result.idUsuarioCreador,
+                        "id":id,
+                        "asuntoReclamo": result.asunto.toUpperCase(),
+                        "estadoActual":result.idReclamoEstado,
+                        "buttonLink":"https://google.com.ar",                                        
+                    }
                 );
                
             } catch (error) {
@@ -116,6 +124,7 @@ export default class ReclamosController {
             res.status(200).json({
                 mensaje: "Reclamo modificado"
             });
+            console.log(result);
 
         }catch(error){
             res.status(500).json({
