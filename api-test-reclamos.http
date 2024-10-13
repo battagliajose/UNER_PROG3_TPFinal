@@ -1,0 +1,14 @@
+### Obtener todos los tipos de usuarios
+
+@idReclamo = 5
+
+
+
+### Actualizar un tipo de usuario por ID
+PATCH  http://localhost:3000/reclamos/{{idReclamo}}
+Content-Type: application/json
+
+{
+    "idReclamoEstado": 2
+}
+

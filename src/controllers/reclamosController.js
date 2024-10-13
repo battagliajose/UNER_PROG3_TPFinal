@@ -1,9 +1,11 @@
 import ReclamosService from '../services/reclamosService.js';
+import EmailService from '../mailer/mailService.js'; 
 
 export default class ReclamosController {
 
     constructor () {
         this.reclamosService = new ReclamosService();
+        this.emailService=new EmailService();
     }
 
     getReclamo = async (req, res) => {
@@ -86,6 +88,7 @@ export default class ReclamosController {
     };
 
     updateReclamo = async (req, res) => {
+       
         try{
             const { id } = req.params;
             const campos = req.body;
@@ -96,6 +99,13 @@ export default class ReclamosController {
                     mensaje: "No se pudo modificar."    
                 })
             }
+
+            //proceso de envio
+           /* await this.emailService.sendEmail(
+                'luisfelipe782006@gmail.com', 
+                'Estado del Reclamo Actualizado',
+                `El reclamo con ID ${id} ha sido actualizado.`
+            );*/
             
             res.status(200).json({
                 mensaje: "Reclamo modificado"
