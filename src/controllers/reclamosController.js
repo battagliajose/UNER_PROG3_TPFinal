@@ -100,12 +100,18 @@ export default class ReclamosController {
                 })
             }
 
+           console.log("Enviando correo");
             //proceso de envio
-           /* await this.emailService.sendEmail(
-                'luisfelipe782006@gmail.com', 
-                'Estado del Reclamo Actualizado',
-                `El reclamo con ID ${id} ha sido actualizado.`
-            );*/
+            try {
+                await this.emailService.sendEmail(
+                    'luisfelipe782006@gmail.com', 
+                    'Estado del Reclamo Actualizado',
+                    `El reclamo con ID ${id} ha sido actualizado.`
+                );
+               
+            } catch (error) {
+                console.log(error)
+            }
             
             res.status(200).json({
                 mensaje: "Reclamo modificado"
