@@ -9,6 +9,6 @@ PATCH  http://localhost:3000/reclamos/{{idReclamo}}
 Content-Type: application/json
 
 {
-    "idReclamoEstado": 2
+    "idReclamoEstado": 3
 }
 
