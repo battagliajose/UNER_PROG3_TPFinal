@@ -128,9 +128,9 @@ export default class ReclamosDatabase {
         try {
         const [result] = await pool.query(consulta, [...valores, id]);
         if (result.affectedRows > 0) {
-            // Obtener el estado actula del reclamo luego de ser actualizado.
+            // Obtener el estado actual del reclamo luego de ser actualizado.
             const reclamoActualizado = await this.getReclamoById(id);            
-            // Envio mail
+            // Envio mail solo si cambio el estado del reclamo.
             await this.enviarMail(estadoReclamo,reclamoActualizado)
             return reclamoActualizado[0];
         
