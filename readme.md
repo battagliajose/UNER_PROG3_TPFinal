@@ -14,11 +14,12 @@
 ### Agregar password del MySQL y guardar como .env
 ``` bash
     PUERTO = 3000
-    HOST = 'localhost'
+    HOST = localhost
     MYSQLPORT = 3306
-    MYSQLUSER = 'root'
-    MYSQLPASS = ''
-    DATABASE = 'reclamos'
+    MYSQLUSER = root
+    MYSQLPASS = 
+    DATABASE = reclamos
+    JWT_SECRET = 
 ```
 
 ## Ejecutar con:
