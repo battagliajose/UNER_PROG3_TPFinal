@@ -10,11 +10,12 @@ const reclamosTipoRouter = express.Router();
 const reclamosTipoController = new ReclamosTipoController(); 
 
 // Defino la rutas GET, POST, DELETE y PATCH para los CRUD
-reclamosTipoRouter.get('/', reclamosTipoController.getReclamosTipo); 
-reclamosTipoRouter.get('/:id', reclamosTipoController.getReclamosTipoById);
-reclamosTipoRouter.post('/', reclamosTipoController.addReclamosTipo); 
-reclamosTipoRouter.delete('/:id', reclamosTipoController.deleteReclamosTipo);
-reclamosTipoRouter.patch('/:id', reclamosTipoController.updateReclamosTipo); 
+reclamosTipoRouter
+    .get('/', reclamosTipoController.getReclamosTipo)
+    .get('/:id', reclamosTipoController.getReclamosTipoById)
+    .post('/', reclamosTipoController.addReclamosTipo)
+    .delete('/:id', reclamosTipoController.deleteReclamosTipo)
+    .patch('/:id', reclamosTipoController.updateReclamosTipo); 
 
 // Exporto el router para que pueda ser utilizado en la aplicación.
 export default reclamosTipoRouter; 

@@ -23,12 +23,10 @@ export default class UsuariosDataBase {
 
     getUsuarioById = async (id) => {
         try {
-            //const query = 'SELECT idUsuario, nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo FROM usuarios WHERE idUsuario = ?';
             const query = `SELECT   u.idUsuario,
                                     nombre,
                                     apellido,
                                     correoElectronico,
-                                    contrasenia,
                                     u.idUsuarioTipo,
                                     ut.descripcion as tipoUsuario,
                                     imagen,
@@ -64,7 +62,7 @@ export default class UsuariosDataBase {
     addUsuario = async (nuevoUsuario) => {
         const {nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo} = nuevoUsuario;
         try {
-            const query = 'INSERT INTO usuarios (nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo) VALUES (?, ?, ?, ?, ?, ?, ?)';
+            const query = 'INSERT INTO usuarios (nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo) VALUES (?, ?, ?, SHA2(?, 256), ?, ?, ?)';
             const [result] = await pool.query(query, [nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo]);
             return ({ id: result.insertId, nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo });
         } catch (error) {
@@ -84,6 +82,7 @@ export default class UsuariosDataBase {
         }
     };
 
+    // Ver cifrado de contraseña
     updateUsuario = async (id, usuario) => {
         const campos = Object.keys(usuario);
         const valores = campos.map((campo) => usuario[campo]);
@@ -107,4 +106,25 @@ export default class UsuariosDataBase {
         throw error;
         }
     };
+
+    validateUsuarioByMail = async (correoElectronico, contrasenia) => {
+        try {
+            const query = `SELECT idUsuario,
+                                  nombre,
+                                  apellido,
+                                  correoElectronico,
+                                  idUsuarioTipo,
+                                  imagen,
+                                  activo
+                                 FROM usuarios
+                                 WHERE correoElectronico = ? and contrasenia = SHA2(?, 256) and activo = 1`
+            const [result] = await pool.query(query, [correoElectronico, contrasenia]);
+            return result[0];
+            
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    };
+
 }

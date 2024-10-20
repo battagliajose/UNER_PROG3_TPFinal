@@ -28,4 +28,9 @@ export default class UsuariosDatabase {
     updateUsuario = async (id, usuario) => {
         return this.usuariosDatabase.updateUsuario(id, usuario);
     };
+
+    validateUsuarioByMail = async (correoElectronico, contrasenia) => {
+        return this.usuariosDatabase.validateUsuarioByMail(correoElectronico, contrasenia);
+    }; 
+
 }
