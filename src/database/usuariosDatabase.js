@@ -27,7 +27,6 @@ export default class UsuariosDataBase {
                                     nombre,
                                     apellido,
                                     correoElectronico,
-                                    contrasenia,
                                     u.idUsuarioTipo,
                                     ut.descripcion as tipoUsuario,
                                     imagen,
@@ -83,6 +82,7 @@ export default class UsuariosDataBase {
         }
     };
 
+    // Ver cifrado de contraseña
     updateUsuario = async (id, usuario) => {
         const campos = Object.keys(usuario);
         const valores = campos.map((campo) => usuario[campo]);
@@ -106,4 +106,25 @@ export default class UsuariosDataBase {
         throw error;
         }
     };
+
+    validateUsuarioByMail = async (correoElectronico, contrasenia) => {
+        try {
+            const query = `SELECT idUsuario,
+                                  nombre,
+                                  apellido,
+                                  correoElectronico,
+                                  idUsuarioTipo,
+                                  imagen,
+                                  activo
+                                 FROM usuarios
+                                 WHERE correoElectronico = ? and contrasenia = SHA2(?, 256) and activo = 1`
+            const [result] = await pool.query(query, [correoElectronico, contrasenia]);
+            return result[0];
+            
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    };
+
 }

@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
+import passport from "passport";
 
 import oficinasRouter from './v1/routes/oficinasRouter.js';
 import usuariosRouter from './v1/routes/usuariosRouter.js';
@@ -9,8 +10,11 @@ import usuariosOficinaRouter from './v1/routes/usuariosOficinaRouter.js';
 import reclamosEstadoRouter from './v1/routes/reclamosEstadoRouter.js';
 import reclamosTipoRouter from './v1/routes/reclamosTipoRouter.js';
 import reclamosRouter from './v1/routes/reclamosRouter.js';
-import validateContentType from './middlewares/validateContentType.js';
 
+import authRouter from './v1/routes/authRouter.js';
+
+import validateContentType from './middlewares/validateContentType.js';
+import { estrategia, validacion } from "./config/passport.js";
 
 dotenv.config();
 
@@ -20,15 +24,20 @@ app.use(morgan('combined'));
 app.use(express.json());
 app.use(validateContentType);
 
-//Routes
-app.use('/oficinas', oficinasRouter);
-app.use('/usuarios', usuariosRouter);
-app.use('/usuariosTipo',usuariosTipoRouter);
-app.use('/usuariosOficinas',usuariosOficinaRouter);
-app.use('/reclamosestado', reclamosEstadoRouter );
-app.use('/reclamostipo', reclamosTipoRouter );
-app.use('/reclamos', reclamosRouter);
+passport.use(estrategia);
+passport.use(validacion);
+app.use(passport.initialize());
 
+//Routes
+app.use('/oficinas', passport.authenticate('jwt', {session: false}), oficinasRouter);
+app.use('/usuarios', passport.authenticate('jwt', {session: false}), usuariosRouter);
+app.use('/usuariosTipo', passport.authenticate('jwt', {session: false}), usuariosTipoRouter);
+app.use('/usuariosOficinas', passport.authenticate('jwt', {session: false}), usuariosOficinaRouter);
+app.use('/reclamosestado', passport.authenticate('jwt', {session: false}), reclamosEstadoRouter );
+app.use('/reclamostipo', passport.authenticate('jwt', {session: false}), reclamosTipoRouter );
+app.use('/reclamos', passport.authenticate('jwt', {session: false}), reclamosRouter);
+
+app.use('/auth', authRouter);
 
 const puerto = process.env.PUERTO || 3000;
 
