@@ -1,6 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
+import fs from 'fs';
+import path from 'path';
 import passport from "passport";
 
 import oficinasRouter from './v1/routes/oficinasRouter.js';
@@ -10,7 +12,6 @@ import usuariosOficinaRouter from './v1/routes/usuariosOficinaRouter.js';
 import reclamosEstadoRouter from './v1/routes/reclamosEstadoRouter.js';
 import reclamosTipoRouter from './v1/routes/reclamosTipoRouter.js';
 import reclamosRouter from './v1/routes/reclamosRouter.js';
-
 import authRouter from './v1/routes/authRouter.js';
 
 import validateContentType from './middlewares/validateContentType.js';
@@ -20,7 +21,10 @@ dotenv.config();
 
 const app = express();
 
-app.use(morgan('combined'));
+const logFileStream = fs.createWriteStream(path.join('./', 'access.log'), { flags: 'a' })
+app.use(morgan('combined', { stream: logFileStream })); // al archivo log.
+app.use(morgan('combined', { stream: process.stdout })); // por consola.
+
 app.use(express.json());
 app.use(validateContentType);
 
@@ -36,7 +40,6 @@ app.use('/usuariosOficinas', passport.authenticate('jwt', {session: false}), usu
 app.use('/reclamosestado', passport.authenticate('jwt', {session: false}), reclamosEstadoRouter );
 app.use('/reclamostipo', passport.authenticate('jwt', {session: false}), reclamosTipoRouter );
 app.use('/reclamos', passport.authenticate('jwt', {session: false}), reclamosRouter);
-
 app.use('/auth', authRouter);
 
 const puerto = process.env.PUERTO || 3000;
