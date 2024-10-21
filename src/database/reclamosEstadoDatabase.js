@@ -16,7 +16,7 @@ export default class ReclamosEstadoDatabase {
         try {
             const query = 'SELECT idReclamoEstado, descripcion, activo FROM reclamos_estado WHERE idReclamoEstado = ?';
             const [result] = await pool.query(query, [id]);
-            return result;
+            return result[0];
         } catch (error) {
             console.error(error);
             throw error;

@@ -43,6 +43,29 @@ export default class UsuariosDataBase {
         }
     };
 
+    getUsuarioByName = async (nombre) => {
+        try {
+            const query = `SELECT   u.idUsuario,
+                                    nombre,
+                                    apellido,
+                                    correoElectronico,
+                                    contrasenia,
+                                    u.idUsuarioTipo,
+                                    ut.descripcion as tipoUsuario,
+                                    imagen,
+                                    u.activo
+                                 FROM usuarios u 
+                                 inner join usuarios_tipo ut 
+                                 ON u.idUsuarioTipo = ut.idUsuarioTipo 
+                                 WHERE nombre = ?`
+            const [result] = await pool.query(query, [nombre]);
+            return result[0];
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    };
+
     getOficinasUsuarioById = async (id) => {
         try {
             const query = `SELECT   o.idOficina as id,

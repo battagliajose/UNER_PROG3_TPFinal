@@ -1,6 +1,7 @@
 import { pool } from './connectionMySql.js';
 
 export default class ReclamosDatabase {
+
     getReclamos = async () => {
         try {
             const query = `SELECT   r.idReclamo,
@@ -34,8 +35,8 @@ export default class ReclamosDatabase {
                                     r.fechaCreado,
                                     r.fechaFinalizado,
                                     r.fechaCancelado,
-                                    re.descripcion,
-                                    rt.descripcion,
+                                    re.descripcion as EstadoReclamo,
+                                    rt.descripcion as TipoReclamo,                                    
                                     uc.nombre AS CreadorUsuario,
                                     uf.nombre AS FinalizaUsuario
                                 FROM reclamos as r
@@ -103,27 +104,24 @@ export default class ReclamosDatabase {
         }
     };
 
-    updateReclamo = async (id, reclamo) => {
+    updateReclamo = async (id, reclamo) => {       
         const campos = Object.keys(reclamo);
         const valores = campos.map((campo) => reclamo[campo]);
         const consulta = `UPDATE reclamos SET ${campos
         .map((campo) => `${campo} = ?`)
         .join(", ")} WHERE idReclamo = ?`;
-    
+            
         try {
-        const [result] = await pool.query(consulta, [...valores, id]);
-        if (result.affectedRows > 0) {
-            const [reclamoActualizado] = await pool.query(
-            "SELECT * FROM reclamos WHERE idReclamo = ?",
-            [id]
-            );
-            return reclamoActualizado[0];
-        } else {
-            return null;
-        }
+            const [result] = await pool.query(consulta, [...valores, id]);
+            if (result.affectedRows > 0) {
+                const reclamoActualizado = await this.getReclamoById(id);            
+                return reclamoActualizado[0];
+            } else {
+                return null;
+            }
         } catch (error) {
-        console.error("Error al actualizar el reclamo:", error);
-        throw error;
+            console.error("Error al actualizar el reclamo:", error);
+            throw error;
         }
     };
 }
