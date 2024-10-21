@@ -8,6 +8,10 @@ import passport from "passport";
 //importación del middleware para prevención ataques de fuerza bruta
 import limiter from './middlewares/rateLimitMiddleware.js';
 
+//imporatación de middleware para prevenir los siguientes ataques: 
+// - cross-site scripting (XSS) 
+// - clickjacking
+import helmet from 'helmet' 
 
 
 import oficinasRouter from './v1/routes/oficinasRouter.js';
@@ -34,6 +38,9 @@ app.use(morgan('combined', { stream: process.stdout })); // por consola.
 
 app.use(express.json());
 app.use(validateContentType);
+
+// Usar Helmet para prevención xss & clickjacking
+app.use(helmet());
 
 //Se aplica middleware de prevención ataques fuerza bruta a todas las rutas
 app.use(limiter);
