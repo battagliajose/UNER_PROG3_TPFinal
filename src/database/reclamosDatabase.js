@@ -1,10 +1,6 @@
 import { pool } from './connectionMySql.js';
 
 export default class ReclamosDatabase {
-        
-    constructor () {       
-        //this.emailService=new EmailService();
-    }
 
     getReclamos = async () => {
         try {
