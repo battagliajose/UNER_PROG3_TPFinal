@@ -46,4 +46,26 @@ export default class EmailService {
             console.error('Error al enviar el email:', error);
         }
     };
+
+    // Metodo de envio mail.
+    enviarMail = async(reclamoActualizado, emailUsuario)=>{  
+        try {
+            await this.sendEmail(
+                emailUsuario, 
+                'Estado del Reclamo Actualizado',
+                //Contenido del correo
+                {
+                    "asunto":"Notificación de Reclamos",
+                    "nombre":reclamoActualizado.CreadorUsuario.toUpperCase(),
+                    "id":reclamoActualizado.idReclamo,
+                    "asuntoReclamo": reclamoActualizado.asunto.toUpperCase(),
+                    "estadoActual":reclamoActualizado.EstadoReclamo.toUpperCase(),
+                    "buttonLink":"https://google.com.ar",                                        
+                }
+            );
+            
+        } catch (error) {
+            console.log(error)
+        }          
+    }
 }

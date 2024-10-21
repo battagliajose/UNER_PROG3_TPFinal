@@ -13,6 +13,10 @@ export default class UsuariosDatabase {
         return this.usuariosDatabase.getUsuarioById(id);
     };
 
+    getUsuarioByName = async (nombre) => {
+        return this.usuariosDatabase.getUsuarioByName(nombre);
+    };
+
     getOficinasUsuarioById = async (id) => {
         return this.usuariosDatabase.getOficinasUsuarioById(id);
     };
