@@ -5,6 +5,11 @@ import fs from 'fs';
 import path from 'path';
 import passport from "passport";
 
+//importación del middleware para prevención ataques de fuerza bruta
+import limiter from './middlewares/rateLimitMiddleware.js';
+
+
+
 import oficinasRouter from './v1/routes/oficinasRouter.js';
 import usuariosRouter from './v1/routes/usuariosRouter.js';
 import usuariosTipoRouter from './v1/routes/usuariosTipoRouter.js';
@@ -17,6 +22,8 @@ import authRouter from './v1/routes/authRouter.js';
 import validateContentType from './middlewares/validateContentType.js';
 import { estrategia, validacion } from "./config/passport.js";
 
+
+
 dotenv.config();
 
 const app = express();
@@ -27,6 +34,10 @@ app.use(morgan('combined', { stream: process.stdout })); // por consola.
 
 app.use(express.json());
 app.use(validateContentType);
+
+//Se aplica middleware de prevención ataques fuerza bruta a todas las rutas
+app.use(limiter);
+
 
 passport.use(estrategia);
 passport.use(validacion);
