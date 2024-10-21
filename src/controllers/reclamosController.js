@@ -1,11 +1,9 @@
 import ReclamosService from '../services/reclamosService.js';
-import EmailService from '../mailer/mailService.js'; 
 
 export default class ReclamosController {
 
     constructor () {
         this.reclamosService = new ReclamosService();
-        this.emailService=new EmailService();
     }
 
     getReclamo = async (req, res) => {
