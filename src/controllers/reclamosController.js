@@ -86,6 +86,7 @@ export default class ReclamosController {
     };
 
     updateReclamo = async (req, res) => {
+       
         try{
             const { id } = req.params;
             const campos = req.body;
@@ -95,11 +96,11 @@ export default class ReclamosController {
                 return res.status(404).json({
                     mensaje: "No se pudo modificar."    
                 })
-            }
+            }                     
             
             res.status(200).json({
                 mensaje: "Reclamo modificado"
-            });
+            });            
 
         }catch(error){
             res.status(500).json({

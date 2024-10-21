@@ -20,6 +20,10 @@
     MYSQLPASS = 
     DATABASE = reclamos
     JWT_SECRET = 
+    SMTP_HOST = smtp.gmail.com
+    SMTP_PORT = 465
+    SMTP_USER = uner.prog3.grupo11@gmail.com
+    SMTP_PASS = yjqw cazk ztrl cwjy
 ```
 
 ## Ejecutar con:
