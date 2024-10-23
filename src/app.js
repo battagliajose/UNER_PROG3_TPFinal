@@ -30,7 +30,7 @@ import authRouter from './v1/routes/authRouter.js';
 import validateContentType from './middlewares/validateContentType.js';
 import { estrategia, validacion } from "./config/passport.js";
 
-
+import { swaggerSetup } from './swagger.js';
 
 dotenv.config();
 
@@ -58,6 +58,7 @@ passport.use(estrategia);
 passport.use(validacion);
 app.use(passport.initialize());
 
+swaggerSetup(app);
 //Routes
 app.use('/oficinas', passport.authenticate('jwt', {session: false}), oficinasRouter);
 app.use('/usuarios', passport.authenticate('jwt', {session: false}), usuariosRouter);
