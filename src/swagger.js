@@ -36,10 +36,17 @@ const swaggerOptions = {
 // Generar la especificación Swagger
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
+const swaggerUiOptions = {
+    explorer: true,
+    swaggerOptions: {
+        docExpansion: 'none',
+        defaultModelsExpandDepth: -1,
+        defaultModelExpandDepth: -1,
+        displayRequestDuration: true,
+        filter: true,
+    }
+};
 // Exportar la configuración de Swagger
 export const swaggerSetup = (app) => {
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs,{
-        explorer:true, // Permite explorar la API
-        docExpansion: 'none', // Colapsa todos los tags por defecto
-    }));
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs,swaggerUiOptions));
 };

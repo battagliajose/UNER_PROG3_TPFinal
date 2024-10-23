@@ -47,8 +47,8 @@ reclamosEstadoRouter
  /**
  * @swagger
  * /reclamosestado/{id}:
- *   get:
- *     summary: Obtener un estado de reclamo por ID
+ *   post:
+ *     summary: Agregar un nuevo reclamo estado
  *     tags: [ReclamosEstado]
  *     parameters:
  *       - name: id
