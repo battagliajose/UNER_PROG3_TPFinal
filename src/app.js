@@ -30,6 +30,10 @@ import authRouter from './v1/routes/authRouter.js';
 import validateContentType from './middlewares/validateContentType.js';
 import { estrategia, validacion } from "./config/passport.js";
 
+//importo middleware para asegurar que los usuarios con perfil autorizado
+//puedan llegar a las rutas
+import autorizarUsuarios from './autorizarUsuarios.js';
+
 
 
 dotenv.config();
@@ -62,7 +66,8 @@ app.use(passport.initialize());
 app.use('/oficinas', passport.authenticate('jwt', {session: false}), oficinasRouter);
 app.use('/usuarios', passport.authenticate('jwt', {session: false}), usuariosRouter);
 app.use('/usuariosTipo', passport.authenticate('jwt', {session: false}), usuariosTipoRouter);
-app.use('/usuariosOficinas', passport.authenticate('jwt', {session: false}), usuariosOficinaRouter);
+//probar autorizarUsuarios en este endpoint 
+app.use('/usuariosOficinas', autorizarUsuarios([1]),passport.authenticate('jwt', {session: false}), usuariosOficinaRouter);
 app.use('/reclamosestado', passport.authenticate('jwt', {session: false}), reclamosEstadoRouter );
 app.use('/reclamostipo', passport.authenticate('jwt', {session: false}), reclamosTipoRouter );
 app.use('/reclamos', passport.authenticate('jwt', {session: false}), reclamosRouter);
