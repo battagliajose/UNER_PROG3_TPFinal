@@ -59,14 +59,14 @@ passport.use(validacion);
 app.use(passport.initialize());
 
 //Routes
-app.use('/oficinas', passport.authenticate('jwt', {session: false}), oficinasRouter);
-app.use('/usuarios', passport.authenticate('jwt', {session: false}), usuariosRouter);
-app.use('/usuariosTipo', passport.authenticate('jwt', {session: false}), usuariosTipoRouter);
-app.use('/usuariosOficinas', passport.authenticate('jwt', {session: false}), usuariosOficinaRouter);
-app.use('/reclamosestado', passport.authenticate('jwt', {session: false}), reclamosEstadoRouter );
-app.use('/reclamostipo', passport.authenticate('jwt', {session: false}), reclamosTipoRouter );
-app.use('/reclamos', passport.authenticate('jwt', {session: false}), reclamosRouter);
-app.use('/auth', authRouter);
+app.use('/v1/oficinas', passport.authenticate('jwt', {session: false}), oficinasRouter);
+app.use('/v1/usuarios', passport.authenticate('jwt', {session: false}), usuariosRouter);
+app.use('/v1/usuariosTipo', passport.authenticate('jwt', {session: false}), usuariosTipoRouter);
+app.use('/v1/usuariosOficinas', passport.authenticate('jwt', {session: false}), usuariosOficinaRouter);
+app.use('/v1/reclamosestado', passport.authenticate('jwt', {session: false}), reclamosEstadoRouter );
+app.use('/v1/reclamostipo', passport.authenticate('jwt', {session: false}), reclamosTipoRouter );
+app.use('/v1/reclamos', passport.authenticate('jwt', {session: false}), reclamosRouter);
+app.use('/v1/auth', authRouter);
 
 const puerto = process.env.PUERTO || 3000;
 
