@@ -93,17 +93,6 @@ export default class ReclamosDatabase {
         }
     };
 
-    deleteReclamo = async (id) => {
-        try {
-            const query = 'DELETE FROM reclamos WHERE idReclamo = ?';
-            const [result] = await pool.query(query, [id]);
-            return result;
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
-    };
-
     updateReclamo = async (id, reclamo) => {       
         const campos = Object.keys(reclamo);
         const valores = campos.map((campo) => reclamo[campo]);
