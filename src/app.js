@@ -68,7 +68,7 @@ app.use('/usuarios', autorizarUsuarios([1, 3]), passport.authenticate('jwt', {se
 app.use('/usuariosTipo', autorizarUsuarios([1]), passport.authenticate('jwt', {session: false}), usuariosTipoRouter);
 app.use('/usuariosOficinas', autorizarUsuarios([1]), passport.authenticate('jwt', {session: false}), usuariosOficinaRouter);
 app.use('/reclamostipo', autorizarUsuarios([1]), passport.authenticate('jwt', {session: false}), reclamosTipoRouter );
-app.use('/reclamos',  autorizarUsuarios([1, 2, 3]), passport.authenticate('jwt', {session: false}), reclamosRouter);
+app.use('/reclamos', autorizarUsuarios([1, 2, 3]), passport.authenticate('jwt', {session: false}), reclamosRouter);
 app.use('/auth', authRouter);
 
 const puerto = process.env.PUERTO || 3000;
