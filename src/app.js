@@ -29,8 +29,10 @@ import authRouter from './v1/routes/authRouter.js';
 import validateContentType from './middlewares/validateContentType.js';
 import { estrategia, validacion } from "./config/passport.js";
 
-//importo middleware para asegurar que los usuarios con perfil autorizado
-//puedan llegar a las rutas
+import { swaggerSetup } from './swagger.js';
+
+// Importo middleware para asegurar que los usuarios con perfil autorizado
+// puedan llegar a las rutas
 import autorizarUsuarios from './middlewares/autorizarUsuarios.js';
 
 dotenv.config();
@@ -57,6 +59,7 @@ passport.use(estrategia);
 passport.use(validacion);
 app.use(passport.initialize());
 
+swaggerSetup(app);
 //Routes
 app.use('/v1/oficinas', passport.authenticate('jwt', {session: false}), autorizarUsuarios([1]), oficinasRouter);
 app.use('/v1/usuarios', passport.authenticate('jwt', {session: false}), autorizarUsuarios([1, 3]), usuariosRouter);
