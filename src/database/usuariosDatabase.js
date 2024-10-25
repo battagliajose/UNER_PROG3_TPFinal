@@ -36,7 +36,7 @@ export default class UsuariosDataBase {
                                  ON u.idUsuarioTipo = ut.idUsuarioTipo 
                                  WHERE idUsuario = ?`
             const [result] = await pool.query(query, [id]);
-            return result;
+            return result[0];
         } catch (error) {
             console.error(error);
             throw error;
