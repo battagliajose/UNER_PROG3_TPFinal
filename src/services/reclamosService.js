@@ -20,10 +20,6 @@ export default class ReclamosService {
         return this.reclamosDatabase.addReclamo(nuevoReclamo);
     };
 
-    deleteReclamo = async (id) => {
-        return this.reclamosDatabase.deleteReclamo(id);
-    };
-
     updateReclamo = async (id, reclamo) => {
         const [reclamoOriginal] = await this.reclamosDatabase.getReclamoById(id); //Ver porque devuelve array.
         const reclamoModificado = await this.reclamosDatabase.updateReclamo(id, reclamo);
