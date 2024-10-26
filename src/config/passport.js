@@ -29,6 +29,7 @@ const validacion = new JwtStrategy({
     async (jwtPayload, done) => {
         const usuariosService = new UsuariosService();
         const user = await usuariosService.getUsuarioById(jwtPayload.idUsuario);
+
         if (user) {
             return done(null, user);
         } else {
