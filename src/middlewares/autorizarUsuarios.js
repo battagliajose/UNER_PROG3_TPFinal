@@ -8,7 +8,7 @@ uso en los endpoints
 export default function autorizarUsuarios(perfilAutorizados =[]) {
     return (req, res, next) => {
         const usuario = req.user; // en token de autenticación
-        
+
         if (!usuario || !perfilAutorizados.includes(usuario.idUsuarioTipo)) {
             return res.status(403).json({
                 estado: "Falló",
