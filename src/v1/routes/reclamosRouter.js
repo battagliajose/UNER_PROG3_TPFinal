@@ -1,5 +1,7 @@
 import express from 'express';
 import ReclamosController from '../../controllers/reclamosController.js';
+import autorizarUsuarios from '../../middlewares/autorizarUsuarios.js';
+import UserTypes from '../../config/userTypes.js';
 
 const reclamosRouter = express.Router();
 const reclamosController = new ReclamosController();
@@ -16,7 +18,7 @@ const reclamosController = new ReclamosController();
  *       200:
  *         description: Lista de reclamos        
  */
-reclamosRouter.get('/', reclamosController.getReclamo);
+reclamosRouter.get('/', autorizarUsuarios([UserTypes.ADMIN, UserTypes.EMPLEADO, UserTypes.CLIENTE]), reclamosController.getReclamos);
 
 /**
  * @swagger
@@ -39,7 +41,7 @@ reclamosRouter.get('/', reclamosController.getReclamo);
  *       404:
  *         description: Reclamo no encontrado
  */
-reclamosRouter.get('/:id', reclamosController.getReclamoById);
+reclamosRouter.get('/:id', autorizarUsuarios([UserTypes.ADMIN, UserTypes.CLIENTE]), reclamosController.getReclamoById);
 
 /**
  * @swagger
@@ -70,7 +72,11 @@ reclamosRouter.get('/:id', reclamosController.getReclamoById);
  *       201:
  *         description: Reclamo creado
  */
-reclamosRouter.post('/', reclamosController.addReclamo);
+reclamosRouter.post('/', autorizarUsuarios([UserTypes.CLIENTE]), reclamosController.addReclamo);
+
+reclamosRouter.patch('/:id/cancelar', autorizarUsuarios([UserTypes.CLIENTE]), reclamosController.cancelReclamo);
+
+reclamosRouter.patch('/:id/cambiarEstado', autorizarUsuarios([UserTypes.EMPLEADO]), reclamosController.cambiarEstadoReclamo);
 
 /**
  * @swagger
@@ -108,7 +114,6 @@ reclamosRouter.post('/', reclamosController.addReclamo);
  *       200:
  *         description: Reclamo actualizado
  */
-reclamosRouter.patch('/:id', reclamosController.updateReclamo);
-
+reclamosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN]), reclamosController.updateReclamo);
 
 export default reclamosRouter;

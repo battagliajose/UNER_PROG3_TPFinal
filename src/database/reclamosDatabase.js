@@ -12,6 +12,7 @@ export default class ReclamosDatabase {
                                     r.fechaCancelado,
                                     re.descripcion,
                                     rt.descripcion,
+                                    r.idUsuarioCreador,
                                     uc.nombre AS CreadorUsuario,
                                     uf.nombre AS FinalizaUsuario
                                 FROM reclamos as r
@@ -27,6 +28,34 @@ export default class ReclamosDatabase {
         }
     }
 
+    getReclamosByUser = async (usuario) => {
+        try {
+            const idUsuario = usuario.idUsuario;
+            const query = `SELECT   r.idReclamo,
+                                    r.asunto,
+                                    r.descripcion,
+                                    r.fechaCreado,
+                                    r.fechaFinalizado,
+                                    r.fechaCancelado,
+                                    re.descripcion,
+                                    rt.descripcion,
+                                    r.idUsuarioCreador,
+                                    uc.nombre AS CreadorUsuario,
+                                    uf.nombre AS FinalizaUsuario
+                                FROM reclamos as r
+                                LEFT JOIN reclamos_estado as re ON r.idReclamoEstado = re.idReclamoEstado
+                                LEFT JOIN reclamos_tipo as rt ON r.idReclamoTipo = rt.idReclamoTipo
+                                LEFT JOIN usuarios as uc ON r.idUsuarioCreador = uc.idUsuario 
+                                LEFT JOIN usuarios as uf ON r.idUsuarioFinalizador = uf.idUsuario
+                                WHERE idUsuarioCreador = ?`;
+            const [result] = await pool.query(query, [idUsuario]);
+            return result;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
     getReclamoById = async (id) => {
         try {
             const query = `SELECT   r.idReclamo,
@@ -35,8 +64,11 @@ export default class ReclamosDatabase {
                                     r.fechaCreado,
                                     r.fechaFinalizado,
                                     r.fechaCancelado,
+                                    r.idReclamoEstado,
                                     re.descripcion as EstadoReclamo,
+                                    r.idReclamoTipo,
                                     rt.descripcion as TipoReclamo,                                    
+                                    r.idUsuarioCreador,
                                     uc.nombre AS CreadorUsuario,
                                     uf.nombre AS FinalizaUsuario
                                 FROM reclamos as r
@@ -46,7 +78,36 @@ export default class ReclamosDatabase {
                                 LEFT JOIN usuarios as uf ON r.idUsuarioFinalizador = uf.idUsuario
                                 WHERE idReclamo = ?`;
             const [result] = await pool.query(query, [id]);
-            return result;
+            return result[0];
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    };
+
+    getReclamosByTipo = async (idReclamoTipo) => {
+        try {
+            const query = `SELECT   r.idReclamo,
+                                    r.asunto,
+                                    r.descripcion,
+                                    r.fechaCreado,
+                                    r.fechaFinalizado,
+                                    r.fechaCancelado,
+                                    r.idReclamoEstado,
+                                    re.descripcion as EstadoReclamo,
+                                    r.idReclamoTipo,
+                                    rt.descripcion as TipoReclamo,                                    
+                                    r.idUsuarioCreador,
+                                    uc.nombre AS CreadorUsuario,
+                                    uf.nombre AS FinalizaUsuario
+                                FROM reclamos as r
+                                LEFT JOIN reclamos_estado as re ON r.idReclamoEstado = re.idReclamoEstado
+                                LEFT JOIN reclamos_tipo as rt ON r.idReclamoTipo = rt.idReclamoTipo
+                                LEFT JOIN usuarios as uc ON r.idUsuarioCreador = uc.idUsuario 
+                                LEFT JOIN usuarios as uf ON r.idUsuarioFinalizador = uf.idUsuario
+                                WHERE r.idReclamoTipo = ?`;
+            const [result] = await pool.query(query, [idReclamoTipo]);
+            return result[0];
         } catch (error) {
             console.error(error);
             throw error;
@@ -57,13 +118,9 @@ export default class ReclamosDatabase {
         const {
             asunto,
             descripcion,
-            fechaCreado,
-            fechaFinalizado,
-            fechaCancelado,
-            idReclamoEstado,
             idReclamoTipo,
             idUsuarioCreador,
-            idUsuarioFinalizador } = nuevoReclamo;
+         } = nuevoReclamo;
         try {
             const query = `INSERT INTO reclamos (
                                     asunto,
@@ -75,17 +132,12 @@ export default class ReclamosDatabase {
                                     idReclamoTipo,
                                     idUsuarioCreador,
                                     idUsuarioFinalizador) 
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                                VALUES (?, ?, now(), null, null, 1, ?, ?, null)`;
             const [result] = await pool.query(query, [
                 asunto,
                 descripcion,
-                fechaCreado,
-                fechaFinalizado,
-                fechaCancelado,
-                idReclamoEstado,
                 idReclamoTipo,
-                idUsuarioCreador,
-                idUsuarioFinalizador]);
+                idUsuarioCreador]);
             return result;
         } catch (error) {
             console.error(error);
@@ -104,7 +156,7 @@ export default class ReclamosDatabase {
             const [result] = await pool.query(consulta, [...valores, id]);
             if (result.affectedRows > 0) {
                 const reclamoActualizado = await this.getReclamoById(id);            
-                return reclamoActualizado[0];
+                return reclamoActualizado;
             } else {
                 return null;
             }
