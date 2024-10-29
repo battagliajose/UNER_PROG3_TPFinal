@@ -47,9 +47,8 @@ export default class UsuariosDatabase {
         return this.usuariosDatabase.validateUsuarioByMail(correoElectronico, contrasenia);
     }; 
 
-    hashPassword = (contrasenia) => {
-        // Aquí puedes usar una librería de hashing o implementar SHA2
-        return crypto.createHash('sha256').update(contrasenia).digest('hex');
+    hashPassword =async (contrasenia) => {       
+        return await crypto.createHash('sha256').update(contrasenia).digest('hex');
     };
 
 }
