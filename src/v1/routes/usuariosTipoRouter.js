@@ -7,7 +7,7 @@ const usuariosTipoController = new UsuariosTipoController();
 
 /**
  * @swagger
- * /usuariostipo:
+ * /v1/usuariostipo:
  *   get:
  *     summary: Obtener todos los tipos de usuarios
  *     tags: [UsuariosTipo]
@@ -19,7 +19,7 @@ usuariosTipoRouter.get('/', usuariosTipoController.getUsuariosTipo);
 
 /**
  * @swagger
- * /usuariostipo/{id}:
+ * /v1/usuariostipo/{id}:
  *   get:
  *     summary: Obtener un tipo de usuario por ID
  *     tags: [UsuariosTipo]
@@ -40,7 +40,7 @@ usuariosTipoRouter.get('/:id', usuariosTipoController.getUsuariosTipoId);
 
 /**
  * @swagger
- * /usuariostipo:
+ * /v1/usuariostipo:
  *   post:
  *     summary: Agregar un nuevo tipo de usuario
  *     tags: [UsuariosTipo]
@@ -62,7 +62,7 @@ usuariosTipoRouter.post('/', usuariosTipoController.addUsuariosTipo);
 
 /**
  * @swagger
- * /usuariostipo/{id}:
+ * /v1/usuariostipo/{id}:
  *   delete:
  *     summary: Eliminar un tipo de usuario por ID
  *     tags: [UsuariosTipo]
@@ -83,7 +83,7 @@ usuariosTipoRouter.delete('/:id', usuariosTipoController.deleteUsuariosTipo);
 
 /**
  * @swagger
- * /usuariostipo/{id}:
+ * /v1/usuariostipo/{id}:
  *   patch:
  *     summary: Actualizar un tipo de usuario por ID
  *     tags: [UsuariosTipo]

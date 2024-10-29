@@ -19,7 +19,7 @@ oficinasRouter.get('/', oficinasController.getOficinas);
 
 /**
  * @swagger
- * /oficinas/{id}:
+ * /v1/oficinas/{id}:
  *   get:
  *     summary: Obtener una oficina por ID
  *     tags: [Oficinas]
@@ -40,7 +40,7 @@ oficinasRouter.get('/:id', oficinasController.getOficinaById);
 
 /**
  * @swagger
- * /oficinas:
+ * /v1/oficinas:
  *   post:
  *     summary: Agregar una nueva oficina
  *     tags: [Oficinas]
@@ -65,7 +65,7 @@ oficinasRouter.post('/', oficinasController.addOficina);
 
 /**
  * @swagger
- * /oficinas/{id}:
+ * /v1/oficinas/{id}:
  *   delete:
  *     summary: Eliminar una oficina por ID
  *     tags: [Oficinas]
@@ -86,7 +86,7 @@ oficinasRouter.delete('/:id', oficinasController.deleteOficina);
 
 /**
  * @swagger
- * /oficinas/{id}:
+ * /v1/oficinas/{id}:
  *   patch:
  *     summary: Actualizar una oficina por ID
  *     tags: [Oficinas]

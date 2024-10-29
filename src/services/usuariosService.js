@@ -34,6 +34,10 @@ export default class UsuariosDatabase {
         if (usuario.idUsuarioTipo === 3) 
             return this.usuariosDatabase.updateUsuario(usuario.idUsuario, campos);
 
+        if (this.usuariosDatabase.incudes('contrasenia')){
+            console.log("quieren cambiar la contraseña");
+        }
+
         return this.usuariosDatabase.updateUsuario(id, campos);
     };
 

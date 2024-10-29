@@ -9,7 +9,7 @@ const usuariosController = new UsuariosController();
 
 /**
  * @swagger
- * /usuarios:
+ * /v1/usuarios:
  *   get:
  *     summary: Obtener todos los usuarios
  *     tags: [Usuarios]
@@ -21,7 +21,7 @@ usuariosRouter.get('/', autorizarUsuarios([UserTypes.ADMIN]), usuariosController
 
 /**
  * @swagger
- * /usuarios/{id}:
+ * /v1/usuarios/{id}:
  *   get:
  *     summary: Obtener un usuario por ID
  *     tags: [Usuarios]
@@ -42,7 +42,7 @@ usuariosRouter.get('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosControl
 
 /**
  * @swagger
- * /usuarios/{id}/oficinas:
+ * /v1/usuarios/{id}/oficinas:
  *   get:
  *     summary: Obtener oficinas de un usuario por ID
  *     tags: [Usuarios]
@@ -63,7 +63,7 @@ usuariosRouter.get('/:id/oficinas', autorizarUsuarios([UserTypes.ADMIN]), usuari
 
 /**
  * @swagger
- * /usuarios:
+ * /v1/usuarios:
  *   post:
  *     summary: Agregar un nuevo usuario
  *     tags: [Usuarios]
@@ -88,7 +88,7 @@ usuariosRouter.post('/agregarEmpleado', autorizarUsuarios([UserTypes.ADMIN]), us
 
 /**
  * @swagger
- * /usuarios/{id}:
+ * /v1/usuarios/{id}:
  *   delete:
  *     summary: Eliminar un usuario por ID
  *     tags: [Usuarios]
@@ -109,7 +109,7 @@ usuariosRouter.delete('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosCont
 
 /**
  * @swagger
- * /usuarios/{id}:
+ * /v1/usuarios/{id}:
  *   patch:
  *     summary: Actualizar un usuario por ID
  *     tags: [Usuarios]
