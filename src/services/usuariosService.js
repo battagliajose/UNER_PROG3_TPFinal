@@ -33,11 +33,8 @@ export default class UsuariosDatabase {
         // ****Ver como filtrar los campos permitidos para modificar según usuario***
         if (usuario.idUsuarioTipo === 3) 
             return this.usuariosDatabase.updateUsuario(usuario.idUsuario, campos);
-
-        if (this.usuariosDatabase.incudes('contrasenia')){
-            console.log("quieren cambiar la contraseña");
-        }
-
+           
+                 
         return this.usuariosDatabase.updateUsuario(id, campos);
     };
 
