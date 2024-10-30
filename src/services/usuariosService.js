@@ -29,8 +29,12 @@ export default class UsuariosDatabase {
         return this.usuariosDatabase.deleteUsuario(id);
     };
 
-    updateUsuario = async (id, usuario) => {
-        return this.usuariosDatabase.updateUsuario(id, usuario);
+    updateUsuario = async (usuario, id, campos) => {
+        // ****Ver como filtrar los campos permitidos para modificar según usuario***
+        if (usuario.idUsuarioTipo === 3) 
+            return this.usuariosDatabase.updateUsuario(usuario.idUsuario, campos);
+
+        return this.usuariosDatabase.updateUsuario(id, campos);
     };
 
     validateUsuarioByMail = async (correoElectronico, contrasenia) => {

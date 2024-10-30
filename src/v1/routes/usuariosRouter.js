@@ -1,5 +1,7 @@
 import express from 'express';
 import UsuariosController from '../../controllers/usuariosController.js';
+import autorizarUsuarios from '../../middlewares/autorizarUsuarios.js';
+import UserTypes from '../../config/userTypes.js';
 
 const usuariosRouter = express.Router();
 
@@ -15,7 +17,7 @@ const usuariosController = new UsuariosController();
  *       200:
  *         description: Lista de usuarios
  */
-usuariosRouter.get('/', usuariosController.getUsuarios);
+usuariosRouter.get('/', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.getUsuarios);
 
 /**
  * @swagger
@@ -36,7 +38,7 @@ usuariosRouter.get('/', usuariosController.getUsuarios);
  *       404:
  *         description: Usuario no encontrado
  */
-usuariosRouter.get('/:id', usuariosController.getUsuarioById);
+usuariosRouter.get('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.getUsuarioById);
 
 /**
  * @swagger
@@ -57,7 +59,7 @@ usuariosRouter.get('/:id', usuariosController.getUsuarioById);
  *       404:
  *         description: Usuario no encontrado
  */
-usuariosRouter.get('/:id/oficinas', usuariosController.getOficinasUsuarioById);
+usuariosRouter.get('/:id/oficinas', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.getOficinasUsuarioById);
 
 /**
  * @swagger
@@ -82,7 +84,7 @@ usuariosRouter.get('/:id/oficinas', usuariosController.getOficinasUsuarioById);
  *       201:
  *         description: Usuario creado
  */
-usuariosRouter.post('/', usuariosController.addUsuario);
+usuariosRouter.post('/agregarEmpleado', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.addEmpleado);
 
 /**
  * @swagger
@@ -103,7 +105,7 @@ usuariosRouter.post('/', usuariosController.addUsuario);
  *       404:
  *         description: Usuario no encontrado
  */
-usuariosRouter.delete('/:id', usuariosController.deleteUsuario);
+usuariosRouter.delete('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.deleteUsuario);
 
 /**
  * @swagger
@@ -137,6 +139,6 @@ usuariosRouter.delete('/:id', usuariosController.deleteUsuario);
  *       404:
  *         description: Usuario no encontrado
  */
-usuariosRouter.patch('/:id', usuariosController.updateUsuario);
+usuariosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN, UserTypes.CLIENTE]), usuariosController.updateUsuario);
 
 export default usuariosRouter;

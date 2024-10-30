@@ -6,9 +6,10 @@ export default class ReclamosController {
         this.reclamosService = new ReclamosService();
     }
 
-    getReclamo = async (req, res) => {
+    getReclamos = async (req, res) => {
         try {
-            const result = await this.reclamosService.getReclamos();
+            const usuario = req.user;
+            const result = await this.reclamosService.getReclamos(usuario);
             res.status(200).json(result);
         } catch (error) {
             console.log(error);
@@ -31,37 +32,31 @@ export default class ReclamosController {
     };
 
     addReclamo = async (req, res) => {
-        const { asunto,
+        const { 
+            asunto,
             descripcion,
-            fechaCreado,
-            fechaFinalizado,
-            fechaCancelado,
-            idReclamoEstado,
             idReclamoTipo,
-            idUsuarioCreador,
-            idUsuarioFinalizador } = req.body;
+        } = req.body;
+        const idUsuarioCreador = req.user.idUsuario;
+
         try {
             const result = await this.reclamosService.addReclamo({
                 asunto,
                 descripcion,
-                fechaCreado,
-                fechaFinalizado,
-                fechaCancelado,
-                idReclamoEstado,
                 idReclamoTipo,
-                idUsuarioCreador,
-                idUsuarioFinalizador});
+                idUsuarioCreador});
             if (result.affectedRows > 0) {
                 res.status(201).json({ id: result.insertId,
                     asunto,
                     descripcion,
-                    fechaCreado,
+                    /*fechaCreado,
                     fechaFinalizado,
                     fechaCancelado,
+                    **Hacer GetReclamoByID para devolver el reclamo creado**
                     idReclamoEstado,
                     idReclamoTipo,
                     idUsuarioCreador,
-                    idUsuarioFinalizador });
+                    idUsuarioFinalizador */});
             } else {
                 res.status(500).json({ error: "No se pudo crear el reclamo" });
             }
@@ -86,6 +81,57 @@ export default class ReclamosController {
             
             res.status(200).json({
                 mensaje: "Reclamo modificado"
+            });            
+
+        }catch(error){
+            res.status(500).json({
+                mensaje: "Error interno."
+            })
+        }
+    };
+
+    cancelReclamo = async (req, res) => {
+       
+        try{
+            const { id } = req.params;
+            const usuario = req.user;
+
+            const result = await this.reclamosService.cancelReclamo(usuario, id);
+
+            if (result.affectedRows === 0) {
+                return res.status(404).json({
+                    mensaje: "No se pudo cancelar."    
+                })
+            }                     
+            
+            res.status(200).json({
+                mensaje: "Reclamo cancelado"
+            });            
+
+        }catch(error){
+            res.status(500).json({
+                mensaje: "Error interno."
+            })
+        }
+    };
+
+    cambiarEstadoReclamo = async (req, res) => {
+       
+        try{
+            const { id } = req.params;
+            const usuario = req.user;
+            const { idReclamoEstado } = req.body;
+
+            const result = await this.reclamosService.cambiarEstadoReclamo(usuario, id, idReclamoEstado);
+
+            if (result.affectedRows === 0) {
+                return res.status(404).json({
+                    mensaje: "No se pudo cambiar el estado."    
+                })
+            }                     
+            
+            res.status(200).json({
+                mensaje: "Estado del reclamo cambiado."
             });            
 
         }catch(error){
