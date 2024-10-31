@@ -25,7 +25,6 @@ export default class ReclamosDatabase {
                 query += 'LIMIT ? OFFSET ? ';
             }
 
-            // Log para verificar la consulta y los valores aplicados
             const [result] = await pool.query(query, [limit, offset]);
             return result;
         } catch (error) {
