@@ -2,7 +2,7 @@ import { pool } from './connectionMySql.js';
 
 export default class ReclamosDatabase {
 
-    getReclamos = async () => {
+    getReclamos = async (limit = 0, offset = 0) => {
         try {
             const query = `SELECT   r.idReclamo,
                                     r.asunto,
@@ -20,7 +20,11 @@ export default class ReclamosDatabase {
                                 LEFT JOIN reclamos_tipo as rt ON r.idReclamoTipo = rt.idReclamoTipo
                                 LEFT JOIN usuarios as uc ON r.idUsuarioCreador = uc.idUsuario 
                                 LEFT JOIN usuarios as uf ON r.idUsuarioFinalizador = uf.idUsuario`;
-            const [result] = await pool.query(query);
+            
+            if (limit) {
+                query += 'LIMIT ? OFFSET ? ';
+            }                                                    
+            const [result] = await pool.query(query [limit, offset]);
             return result;
         } catch (error) {
             console.log(error);
@@ -28,7 +32,7 @@ export default class ReclamosDatabase {
         }
     }
 
-    getReclamosByUser = async (usuario) => {
+    getReclamosByUser = async (limit = 0, offset = 0 ,usuario) => {
         try {
             const idUsuario = usuario.idUsuario;
             const query = `SELECT   r.idReclamo,
@@ -48,7 +52,13 @@ export default class ReclamosDatabase {
                                 LEFT JOIN usuarios as uc ON r.idUsuarioCreador = uc.idUsuario 
                                 LEFT JOIN usuarios as uf ON r.idUsuarioFinalizador = uf.idUsuario
                                 WHERE idUsuarioCreador = ?`;
-            const [result] = await pool.query(query, [idUsuario]);
+                       
+             
+            if (limit) {
+                query += 'LIMIT ? OFFSET ? ';
+                       }                         
+
+            const [result] = await pool.query(query, [idUsuario, limit, offset]);
             return result;
         } catch (error) {
             console.log(error);
