@@ -13,9 +13,11 @@ export default class ReclamosController {
         const offset = req.query.offset;
 
         try{
-            //Si no están definidos limit y offset no hago paginación
+            //Si limit y offset no están definidos no se realiza la paginación
+            // los voy a pasar como parámetros
             let pLimit = limit ? Number(limit) : 0;
             let pOffset = offset ? Number(offset) : 0;
+            
         
             const usuario = req.user;
             const result = await this.reclamosService.getReclamos(pLimit, pOffset, usuario);
