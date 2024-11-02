@@ -7,8 +7,9 @@ export default class UsuariosController {
     }
     
     getUsuarios = async (req, res) => {
+        const usuario = req.user;
         try {
-            const result = await this.usuariosService.getUsuarios();
+            const result = await this.usuariosService.getUsuarios(usuario);
             res.status(200).json(result);
         } catch (error) {
             console.log(error);

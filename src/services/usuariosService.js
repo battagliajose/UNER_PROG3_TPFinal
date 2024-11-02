@@ -1,3 +1,4 @@
+import UserTypes from "../config/userTypes.js";
 import UsuariosDataBase from "../database/usuariosDatabase.js";
 import crypto from 'crypto';
 
@@ -6,8 +7,15 @@ export default class UsuariosDatabase {
         this.usuariosDatabase = new UsuariosDataBase();
     }
     
-    getUsuarios = async () => {
-        return this.usuariosDatabase.getUsuarios();
+    getUsuarios = async (usuario) => {
+        //Si es CLIENTE
+        if (usuario.idUsuarioTipo===UserTypes.CLIENTE){
+           
+            return this.usuariosDatabase.getUsuarioById(usuario.idUsuario);
+        }else{
+            //Si es ADMIN
+            return this.usuariosDatabase.getUsuarios();
+        }
     }
 
     getUsuarioById = async (id) => {

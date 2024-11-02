@@ -18,7 +18,7 @@ const usuariosController = new UsuariosController();
  *       200:
  *         description: Lista de usuarios
  */
-usuariosRouter.get('/', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.getUsuarios);
+usuariosRouter.get('/', autorizarUsuarios([UserTypes.ADMIN, UserTypes.CLIENTE]), usuariosController.getUsuarios);
 
 /**
  * @swagger
