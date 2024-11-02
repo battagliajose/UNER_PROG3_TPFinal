@@ -2,12 +2,17 @@ import ReclamosDatabase from "../database/reclamosDatabase.js";
 import MailService from "./mailService.js";
 import UsuariosService from "./usuariosService.js";
 import OficinasServices from "./oficinasService.js";
+import InformeService from "./informesService.js";
+
 
 export default class ReclamosService {
 
     constructor() {
         this.reclamosDatabase = new ReclamosDatabase();
+        this.informes = new InformeService();
+        this.reclamos = this.reclamosDatabase;
     }
+    
 
     getReclamos = async (usuario) => {
         if (usuario.idUsuarioTipo === 1) { // ADMIN
@@ -112,7 +117,6 @@ export default class ReclamosService {
         }
     }
 
-    //service reporte pdf
     reportePdf = async () => {
         const datosReporte = await this.reclamos.buscarDatosReportePdf();
 
@@ -131,7 +135,6 @@ export default class ReclamosService {
         };
     }
 
-    //service formato csv
     reporteCsv = async () => {
         const datosReporte = await this.reclamos.buscarDatosReporteCsv();
 
@@ -146,8 +149,8 @@ export default class ReclamosService {
                 'Content-Type': 'text/csv',
                 'Content-Disposition': 'attachment; filename="reporte.csv"'
             }
-        }
-    };
+        };
+    }
 
 
 }
