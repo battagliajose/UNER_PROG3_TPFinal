@@ -22,6 +22,23 @@ reclamosRouter.get('/', autorizarUsuarios([UserTypes.ADMIN, UserTypes.EMPLEADO, 
 
 /**
  * @swagger
+ * /reclamos/informe/formato?=pdf
+ * /reclamos/informe/formato?=csv
+ *   get: 
+ *      summary: Informe de reclamos         
+ *      tags: [Reclamos]
+ *      security:
+ *       - BearerAuth: []       
+ *      responses:
+ *       200:
+ *         description: Informe de reclamos que lista el admin en formato pdf o csv
+ */
+reclamosRouter.get('/informe', autorizarUsuarios([UserTypes.ADMIN]), reclamosController.informe);
+
+
+
+/**
+ * @swagger
  * /reclamos/{id}:
  *   get:
  *     summary: Obtener un reclamo por ID

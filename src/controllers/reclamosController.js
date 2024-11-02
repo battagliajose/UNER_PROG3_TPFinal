@@ -1,5 +1,8 @@
 import ReclamosService from '../services/reclamosService.js';
 
+//arreglo de formatos permitidos para el informe del admin
+const formatosPermitidos = ['pdf', 'csv'];
+
 export default class ReclamosController {
 
     constructor () {
@@ -16,6 +19,8 @@ export default class ReclamosController {
             res.status(500).json({ error: 'Error al obtener los reclamos' });
         }
     }
+
+
 
     getReclamoById = async (req, res) => {
         const { id } = req.params;
