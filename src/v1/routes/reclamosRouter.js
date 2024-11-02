@@ -8,7 +8,7 @@ const reclamosController = new ReclamosController();
 
 /**
  * @swagger
- * /reclamos:
+ * /v1/reclamos:
  *   get: 
  *      summary: Obtener todos los reclamos
  *      tags: [Reclamos]
@@ -22,7 +22,7 @@ reclamosRouter.get('/', autorizarUsuarios([UserTypes.ADMIN, UserTypes.EMPLEADO, 
 
 /**
  * @swagger
- * /reclamos/{id}:
+ * /v1/reclamos/{id}:
  *   get:
  *     summary: Obtener un reclamo por ID
  *     tags: [Reclamos]
@@ -45,7 +45,7 @@ reclamosRouter.get('/:id', autorizarUsuarios([UserTypes.ADMIN, UserTypes.CLIENTE
 
 /**
  * @swagger
- * /reclamos:
+ * /v1/reclamos:
  *   post:
  *     summary: Agregar un nuevo reclamo
  *     tags: [Reclamos]
@@ -80,7 +80,7 @@ reclamosRouter.patch('/:id/cambiarEstado', autorizarUsuarios([UserTypes.EMPLEADO
 
 /**
  * @swagger
- * /reclamos/{id}:
+ * /v1/reclamos/{id}:
  *   patch:
  *     summary: Actualizar un reclamo por ID
  *     tags: [Reclamos]

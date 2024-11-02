@@ -12,3 +12,12 @@ Content-Type: application/json
     "idReclamoEstado": 3
 }
 
+### Actualizar usuario
+PATCH  http://localhost:3000/v1/usuarios/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjEsIm5vbWJyZSI6IjY4Njg1Yzk0NzYyMDAyNThjOTEzZjExYzYxNzcyMTVlZGJmZWVjNWZhYjU5ZTYzZjI5Mzc5MzlhZmE4NTM0MDAiLCJhcGVsbGlkbyI6InRhcmdhcmlhbiIsImNvcnJlb0VsZWN0cm9uaWNvIjoiZGFldGFyQGNvcnJlby5jb20iLCJpZFVzdWFyaW9UaXBvIjoxLCJpbWFnZW4iOm51bGwsImFjdGl2byI6MSwiaWF0IjoxNzMwMjA1NTg4LCJleHAiOjE3MzAyMDU4ODh9.eXMS841Mv9d8_digDHVvABybcyGiG6FXxiS55F1oYMI
+
+{   
+    "nombre":"Daenerys",
+    "contrasenia": "daetar"   
+}

@@ -46,7 +46,7 @@ reclamosEstadoRouter
     .get('/:id', reclamosEstadoController.getReclamosEstadoById)
  /**
  * @swagger
- * /reclamosestado/{id}:
+ * /v1/reclamosestado/{id}:
  *   post:
  *     summary: Agregar un nuevo reclamo estado
  *     tags: [ReclamosEstado]
@@ -67,7 +67,7 @@ reclamosEstadoRouter
 
  /**
  * @swagger
- * /reclamosestado/{id}:
+ * /v1/reclamosestado/{id}:
  *   delete:
  *     summary: Eliminar un estado de reclamo por ID
  *     tags: [ReclamosEstado]
@@ -88,7 +88,7 @@ reclamosEstadoRouter
  
  /**
  * @swagger
- * /reclamosestado/{id}:
+ * /v1/reclamosestado/{id}:
  *   patch:
  *     summary: Actualizar un estado de reclamo por ID
  *     tags: [ReclamosEstado]

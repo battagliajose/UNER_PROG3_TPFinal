@@ -111,6 +111,7 @@ export default class UsuariosDataBase {
 
     // Ver cifrado de contraseña
     updateUsuario = async (id, usuario) => {
+        
         const campos = Object.keys(usuario);
         const valores = campos.map((campo) => usuario[campo]);
         const consulta = `UPDATE usuarios SET ${campos

@@ -11,7 +11,7 @@ const usuariosController = new UsuariosController();
 
 /**
  * @swagger
- * /auth/login:
+ * /v1/auth/login:
  *   post:
  *     summary: Iniciar sesión
  *     tags: [Login]

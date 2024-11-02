@@ -1,4 +1,5 @@
 import UsuariosDataBase from "../database/usuariosDatabase.js";
+import crypto from 'crypto';
 
 export default class UsuariosDatabase {
     constructor() {
@@ -30,15 +31,24 @@ export default class UsuariosDatabase {
     };
 
     updateUsuario = async (usuario, id, campos) => {
+        //Control de modificacion si campos viene con contraseñia
+        if(campos.contrasenia){
+            campos.contrasenia=this.hashPassword(campos.contrasenia);
+        }        
         // ****Ver como filtrar los campos permitidos para modificar según usuario***
         if (usuario.idUsuarioTipo === 3) 
             return this.usuariosDatabase.updateUsuario(usuario.idUsuario, campos);
-
+           
+                 
         return this.usuariosDatabase.updateUsuario(id, campos);
     };
 
     validateUsuarioByMail = async (correoElectronico, contrasenia) => {
         return this.usuariosDatabase.validateUsuarioByMail(correoElectronico, contrasenia);
     }; 
+
+    hashPassword =async (contrasenia) => {       
+        return await crypto.createHash('sha256').update(contrasenia).digest('hex');
+    };
 
 }
