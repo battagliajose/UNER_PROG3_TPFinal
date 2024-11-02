@@ -165,4 +165,47 @@ export default class ReclamosDatabase {
             throw error;
         }
     };
+
+    //procedimiento almacenado SQL
+    //Función asincrónica para obtener datos específicos para el reporte en formato PDF
+    buscarDatosReportePdf = async () => {
+        // Consulta SQL que llama al procedimiento almacenado `datosPDF`        
+        const sql = 'CALL `datosPDF`()';
+
+        // Ejecución la consulta y espera el resultado; el resultado es un arreglo de filas
+        const [result] = await conexion.query(sql);
+        
+        // Creación objeto `datosReporte` * contiene los datos necesarios p/reporte PDF
+        const datosReporte = {
+            reclamosTotales : result[0][0].reclamosTotales,
+            reclamosNoFinalizados : result[0][0].reclamosNoFinalizados,
+            reclamosFinalizados : result[0][0].reclamosFinalizados,
+            descripcionTipoRreclamoFrecuente : result[0][0].descripcionTipoRreclamoFrecuente,
+            cantidadTipoRreclamoFrecuente : result[0][0].cantidadTipoRreclamoFrecuente
+        }
+
+        //Retorna objeto `datosReporte` con los datos PDF
+        return datosReporte;
+    }
+
+    //procedimiento almacenado SQL para obtener los datos para reporte csv
+    buscarDatosReporteCsv = async () => {
+
+        // Consulta SQL que selecciona datos de la tabla reclamos y tablas relacionadas
+        const sql = `SELECT r.idReclamo as 'reclamo', rt.descripcion as 'tipo', re.descripcion AS 'estado',
+                     DATE_FORMAT(r.fechaCreado, '%Y-%m-%d %H:%i:%s') AS 'fechaCreado', CONCAT(u.nombre, ' ', u.apellido) AS 'cliente'
+                    FROM reclamos AS r 
+                    INNER JOIN reclamos_tipo AS rt ON rt.idReclamoTipo = r.idReclamoTipo 
+                    INNER JOIN reclamos_estado AS re ON re.idReclamoEstado = r.idReclamoEstado 
+                    INNER JOIN usuarios AS u ON u.idUsuario = r.idUsuarioCreador 
+                        WHERE r.idReclamoEstado <> 4;`;
+
+        //Ejecución de la consulta y espera del resultado
+        //arreglo de objetos (cada objeto representa un reclamo)                            
+        const [result] = await conexion.query(sql);
+        
+        // Retorna el resultado de la consulta para generar archivo CSV
+        return result;
+    };
+
 }
