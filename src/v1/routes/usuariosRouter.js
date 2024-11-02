@@ -2,6 +2,7 @@ import express from 'express';
 import UsuariosController from '../../controllers/usuariosController.js';
 import autorizarUsuarios from '../../middlewares/autorizarUsuarios.js';
 import UserTypes from '../../config/userTypes.js';
+import upload from '../../config/multer.js';
 
 const usuariosRouter = express.Router();
 
