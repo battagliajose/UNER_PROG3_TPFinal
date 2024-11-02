@@ -24,7 +24,7 @@ export default class ReclamosController {
             if (result.length === 0) {
                 return res.status(404).json({ error: 'Reclamo no encontrado' });
             }
-            res.status(200).json(result[0]);
+            res.status(200).json(result);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Error al obtener el reclamo' });
@@ -49,14 +49,8 @@ export default class ReclamosController {
                 res.status(201).json({ id: result.insertId,
                     asunto,
                     descripcion,
-                    /*fechaCreado,
-                    fechaFinalizado,
-                    fechaCancelado,
-                    **Hacer GetReclamoByID para devolver el reclamo creado**
-                    idReclamoEstado,
-                    idReclamoTipo,
-                    idUsuarioCreador,
-                    idUsuarioFinalizador */});
+                    //**Hacer GetReclamoByID para devolver el reclamo creado**
+                });
             } else {
                 res.status(500).json({ error: "No se pudo crear el reclamo" });
             }
