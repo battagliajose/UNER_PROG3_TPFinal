@@ -21,7 +21,7 @@ export default class ReclamosDatabase {
                                 LEFT JOIN usuarios AS uc ON r.idUsuarioCreador = uc.idUsuario 
                                 LEFT JOIN usuarios AS uf ON r.idUsuarioFinalizador = uf.idUsuario`;
 
-            if (limit) {
+            if (limit > 0 && offset >= 0) {
                 query += 'LIMIT ? OFFSET ? ';
             }
 

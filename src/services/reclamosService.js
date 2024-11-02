@@ -19,7 +19,7 @@ export default class ReclamosService {
             // Devuelve solo los reclamos de las oficinas del empleado
             const usuariosService = new UsuariosService();
 
-            const oficinas = await usuariosService.getOficinasUsuarioById(limit, offset, usuario.idUsuario);
+            const oficinas = await usuariosService.getOficinasUsuarioById(usuario.idUsuario);
             let reclamos = [];
 
             for (const oficina of oficinas) {

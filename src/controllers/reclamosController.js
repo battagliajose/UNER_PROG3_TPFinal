@@ -20,7 +20,7 @@ export default class ReclamosController {
             
         
             const usuario = req.user;
-            const result = await this.reclamosService.getReclamos(limit, offset, usuario);
+            const result = await this.reclamosService.getReclamos(pLimit, pOffset, usuario);
             res.status(200).json(result);
         } catch (error) {
             console.log(error);
