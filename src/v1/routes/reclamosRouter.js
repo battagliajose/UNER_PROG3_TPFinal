@@ -46,30 +46,6 @@ reclamosRouter.get('/informe', autorizarUsuarios([UserTypes.ADMIN]), reclamosCon
 
 /**
  * @swagger
- * /v1/reclamos/informe:
- *   get: 
- *     summary: Generar un informe de reclamos en el formato especificado
- *     tags: [Reclamos]
- *     security:
- *       - BearerAuth: []
- *     parameters:
- *       - in: query
- *         name: formato
- *         schema:
- *           type: string
- *           enum: [pdf, csv]
- *         required: true
- *         description: Formato del informe (pdf o csv)
- *     responses:
- *       200:
- *         description: Informe de reclamos en el formato solicitado
- *       400:
- *         description: Formato no válido o faltante
- */
-reclamosRouter.get('/informe', autorizarUsuarios([UserTypes.ADMIN]), reclamosController.informe);
-
-/**
- * @swagger
  * /v1/reclamos/{id}:
  *   get:
  *     summary: Obtener un reclamo por ID
