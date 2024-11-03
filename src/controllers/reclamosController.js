@@ -1,5 +1,8 @@
 import ReclamosService from '../services/reclamosService.js';
 
+//arreglo de formatos permitidos para el informe del admin
+const formatosPermitidos = ['pdf', 'csv'];
+
 export default class ReclamosController {
 
     constructor () {
@@ -15,7 +18,56 @@ export default class ReclamosController {
             console.log(error);
             res.status(500).json({ error: 'Error al obtener los reclamos' });
         }
-    }
+    };
+
+    //informe pdf o csv
+    informe = async (req, res) => {
+
+        try{
+            const formato = req.query.formato; //recibo request del cliente
+            //salgo si es distinto al formato permitido -array declarado line 4-
+            if(!formato || !formatosPermitidos.includes(formato)){
+                return res.status(400).send({
+                    estado:"Falla",
+                    mensaje: "Formato inválido para el informe."    
+                })
+            }
+            
+            // generar informe
+            const {buffer, path, headers} = await this.reclamosService.generarInforme(formato);
+
+            // setear la cabecera de respuesta HTTP que se enviará al cliente
+            res.set(headers)
+
+            if (formato === 'pdf') {
+                //respuesta al cliente para el pdf
+                //método end() se utiliza para finalizar la respuesta HTTP
+                //método end() se utiliza para finalizar la respuesta HTTP                
+                //Al pasar el arg buffer a end() el servidor envía el contenido PDF al cliente                
+                //cliente recibirá el archivo PDF y podrá mostrarlo o permitir su descarga
+                res.status(200).end(buffer);
+            } else if (formato === 'csv') {
+                //respuesta al cliente para csv                
+                //método download va enviar un archivo al cliente 
+                //sugiriendo la descarga
+                //arg path es la ruta del archivo se desea enviar              
+                res.status(200).download(path, (err) => {
+                    if (err) {
+                        return res.status(500).send({
+                            estado:"Falla",
+                            mensaje: " No se pudo generar el informe."    
+                        })
+                    }
+                })
+            }
+        }catch(error){
+            console.log(error)
+            res.status(500).send({
+                estado:"Falla", mensaje: "Error interno en servidor."
+            });
+        } 
+    };
+
 
     getReclamoById = async (req, res) => {
         try {
