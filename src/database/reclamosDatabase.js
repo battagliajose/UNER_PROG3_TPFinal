@@ -15,23 +15,27 @@ export default class ReclamosDatabase {
                                     r.idUsuarioCreador,
                                     uc.nombre AS CreadorUsuario,
                                     uf.nombre AS FinalizaUsuario
-                                FROM reclamos AS r
-                                LEFT JOIN reclamos_estado AS re ON r.idReclamoEstado = re.idReclamoEstado
-                                LEFT JOIN reclamos_tipo AS rt ON r.idReclamoTipo = rt.idReclamoTipo
-                                LEFT JOIN usuarios AS uc ON r.idUsuarioCreador = uc.idUsuario 
-                                LEFT JOIN usuarios AS uf ON r.idUsuarioFinalizador = uf.idUsuario`;
+                        FROM reclamos AS r
+                        LEFT JOIN reclamos_estado AS re ON r.idReclamoEstado = re.idReclamoEstado
+                        LEFT JOIN reclamos_tipo AS rt ON r.idReclamoTipo = rt.idReclamoTipo
+                        LEFT JOIN usuarios AS uc ON r.idUsuarioCreador = uc.idUsuario 
+                        LEFT JOIN usuarios AS uf ON r.idUsuarioFinalizador = uf.idUsuario`;
 
+            // Agrega LIMIT y OFFSET si son válidos
             if (limit > 0 && offset >= 0) {
-                query += 'LIMIT ? OFFSET ? ';
+                query += ' LIMIT ? OFFSET ?'; 
             }
 
-            const [result] = await pool.query(query, [limit, offset]);
+            // Ejecutar la consulta
+            const params = (limit > 0 && offset >= 0) ? [limit, offset] : [];
+            const [result] = await pool.query(query, params);
             return result;
         } catch (error) {
             console.error('Error en SQL:', error);
             throw error;
         }
-}
+
+    }
 
 
     getReclamosByUser = async (limit = 0, offset = 0 ,usuario) => {
