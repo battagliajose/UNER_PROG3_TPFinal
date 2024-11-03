@@ -192,28 +192,5 @@ export default class ReclamosDatabase {
             console.error('Error al obtener estadísticas:', error.message, error.stack)
             throw error
         }
-    };
-    
-
-
-
-
-    /*
-    getEstadisticas = async () => {
-        const query = 'CALL `datosPDF`()';
-
-        const [result] = await conexion.query(query);
-
-        //toma los datos del procedimiento almacenado!! copado!
-        const datosReporte = {
-            reclamosTotales : result[0][0].reclamosTotales,
-            reclamosNoFinalizados : result[0][0].reclamosNoFinalizados,
-            reclamosFinalizados : result[0][0].reclamosFinalizados,
-            descripcionTipoRreclamoFrecuente : result[0][0].descripcionTipoRreclamoFrecuente,
-            cantidadTipoRreclamoFrecuente : result[0][0].cantidadTipoRreclamoFrecuente
-        }
-
-        return datosReporte
-    };
-    */
+    }; 
 }
