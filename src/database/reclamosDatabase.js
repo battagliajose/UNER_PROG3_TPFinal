@@ -165,4 +165,24 @@ export default class ReclamosDatabase {
             throw error;
         }
     };
+
+    //reutilizo la la llamada al procedimiento datosPDF
+    //ver de crear uno nuevo en mysql
+    getEstadisticas = async () => {
+        const query = 'CALL `datosPDF`()';
+
+        const [result] = await conexion.query(query);
+
+        //toma los datos del procedimiento almacenado!! copado!
+        const datosReporte = {
+            reclamosTotales : result[0][0].reclamosTotales,
+            reclamosNoFinalizados : result[0][0].reclamosNoFinalizados,
+            reclamosFinalizados : result[0][0].reclamosFinalizados,
+            descripcionTipoRreclamoFrecuente : result[0][0].descripcionTipoRreclamoFrecuente,
+            cantidadTipoRreclamoFrecuente : result[0][0].cantidadTipoRreclamoFrecuente
+        }
+
+        return datosReporte
+    };
+
 }

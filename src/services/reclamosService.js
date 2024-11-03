@@ -98,4 +98,13 @@ export default class ReclamosService {
         
         return {affectedRows: 0};
     }
+
+    getEstadisticas = async () => {
+        if (usuario.idUsuarioTipo === 1) { // ADMIN
+            // Devuelve todos los reclamos
+            return this.reclamosDatabase.getEstadisticas();
+        } 
+    };
+    
+
 }

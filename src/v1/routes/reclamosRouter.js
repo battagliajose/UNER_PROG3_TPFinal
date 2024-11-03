@@ -116,4 +116,7 @@ reclamosRouter.patch('/:id/cambiarEstado', autorizarUsuarios([UserTypes.EMPLEADO
  */
 reclamosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN]), reclamosController.updateReclamo);
 
+//estadisticas de los reclamos
+reclamosRouter.get('/estadisticas', autorizarUsuarios([UserTypes.ADMIN]), reclamosController.obtenerEstadisticas);
+
 export default reclamosRouter;

@@ -134,4 +134,18 @@ export default class ReclamosController {
             })
         }
     };
+
+
+    //obtener estadisticas de los reclamos
+    obtenerEstadisticas = async (req, res) => {
+        try {
+            const result = await this.reclamosService.getEstadisticas();
+            res.status(200).json(result);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Error al obtener las estadísticas' });
+        }
+    }
+
+
 }
