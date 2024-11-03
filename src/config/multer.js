@@ -3,16 +3,16 @@ import path from 'path';
 
 // Configuración de almacenamiento
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
+    destination: (cb) => {
         // Carpeta donde se guardan las umagenes
-        cb(null, 'img/');
+        cb(null, 'src/img');
     },
     filename: (req, file, cb) => {
      
         const originalName = path.basename(file.originalname, path.extname(file.originalname));     
         const timestamp = Date.now();        
         // Concateno con el nombre del arhivo y lo concateno con timestamp
-        const newFileName = `${originalName}-${timestamp}${path.extname(file.originalname)}`;        // Llamar a 
+        const newFileName = `${originalName}-${timestamp}${path.extname(file.originalname)}`;      
         cb(null, newFileName);
     }
 });
@@ -34,5 +34,7 @@ const upload = multer({
     storage: storage,
     fileFilter: fileFilter
 });
+
+
 
 export default upload;

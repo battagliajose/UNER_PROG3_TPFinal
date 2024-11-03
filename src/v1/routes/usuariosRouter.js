@@ -71,21 +71,34 @@ usuariosRouter.get('/:id/oficinas', autorizarUsuarios([UserTypes.ADMIN]), usuari
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data: 
  *           schema:
  *             type: object
  *             properties:
  *               nombre:
  *                 type: string
  *                 description: Nombre del usuario
- *               email:
+ *               apellido:
+ *                 type: string
+ *                 description: Apellido del usuario
+ *               correoElectronico:
  *                 type: string
  *                 description: Correo electrónico del usuario
+ *               contrasenia:
+ *                 type: string
+ *                 description: Contraseña del usuario
+ *               imagen:
+ *                 type: string
+ *                 format: binary 
+ *                 description: Imagen del usuario
  *     responses:
  *       201:
- *         description: Usuario creado
+ *         description: Usuario creado exitosamente
+ *       500:
+ *         description: Error al crear el usuario
  */
-usuariosRouter.post('/agregarEmpleado', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.addEmpleado);
+
+usuariosRouter.post('/agregarEmpleado', autorizarUsuarios([UserTypes.ADMIN]),upload.single('imagen'), usuariosController.addEmpleado);
 
 /**
  * @swagger

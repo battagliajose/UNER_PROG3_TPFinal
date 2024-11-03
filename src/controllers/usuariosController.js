@@ -47,13 +47,16 @@ export default class UsuariosController {
     };
 
     addEmpleado = async (req, res) => {
-        const {nombre, apellido, correoElectronico, contrasenia, imagen} = req.body;
+        const {nombre, apellido, correoElectronico, contrasenia} = req.body;
         // ** FALTA AGREGAR LA ASOCIACION EMPLEADO-OFICINA (tabla usuarios_oficinas) **//
         const idUsuarioTipo = 2;
         const activo = 1;
-
+        const imagen = req.file ? req.file.filename : null;
+        
         try {
+    
             const result = await this.usuariosService.addUsuario({nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo});
+
             res.status(201).json({ id: result.insertId, nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo });
         } catch (error) {
             console.error(error);
