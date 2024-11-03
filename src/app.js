@@ -63,7 +63,7 @@ app.use(passport.initialize());
 swaggerSetup(app);
 //Routes
 app.use('/v1/oficinas', passport.authenticate('jwt', {session: false}), autorizarUsuarios([UserTypes.ADMIN]), oficinasRouter);
-app.use('/v1/usuarios', passport.authenticate('jwt', {session: false}), autorizarUsuarios([UserTypes.ADMIN, UserTypes.CLIENTE]), usuariosRouter);
+app.use('/v1/usuarios', passport.authenticate('jwt', {session: false}), autorizarUsuarios([UserTypes.ADMIN, UserTypes.EMPLEADO, UserTypes.CLIENTE]), usuariosRouter);
 app.use('/v1/usuariosTipo', passport.authenticate('jwt', {session: false}), autorizarUsuarios([UserTypes.ADMIN]), usuariosTipoRouter);
 app.use('/v1/usuariosOficinas', passport.authenticate('jwt', {session: false}), autorizarUsuarios([UserTypes.ADMIN]), usuariosOficinaRouter);
 app.use('/v1/reclamosestado', passport.authenticate('jwt', {session: false}), autorizarUsuarios([UserTypes.ADMIN]), reclamosEstadoRouter );

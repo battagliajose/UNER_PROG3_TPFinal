@@ -139,6 +139,8 @@ usuariosRouter.delete('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosCont
  *       404:
  *         description: Usuario no encontrado
  */
-usuariosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN, UserTypes.CLIENTE]), usuariosController.updateUsuario);
+usuariosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.updateUsuario);
+
+usuariosRouter.patch('/', autorizarUsuarios([UserTypes.ADMIN, UserTypes.EMPLEADO, UserTypes.CLIENTE]), usuariosController.updateUsuario);
 
 export default usuariosRouter;

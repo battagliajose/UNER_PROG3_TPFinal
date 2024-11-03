@@ -1,7 +1,6 @@
 import ReclamosDatabase from "../database/reclamosDatabase.js";
 import MailService from "./mailService.js";
 import UsuariosService from "./usuariosService.js";
-import OficinasServices from "./oficinasService.js";
 
 export default class ReclamosService {
 
@@ -38,8 +37,13 @@ export default class ReclamosService {
         return {affectedRows: 0};
     }
 
-    getReclamoById = async (id) => {
-        return this.reclamosDatabase.getReclamoById(id);
+    getReclamoById = async (usuario, id) => {
+        const reclamo = await this.reclamosDatabase.getReclamoById(id);
+        if (usuario.idUsuarioTipo != 1 && reclamo.idUsuarioCreador != usuario.idUsuario) {
+            // Si no es admin y no es el creador del reclamo no lo retorna
+            return { length: 0 };
+        }
+        return reclamo;
     };
 
     addReclamo = async (nuevoReclamo) => {
@@ -67,7 +71,12 @@ export default class ReclamosService {
         const reclamo = await this.reclamosDatabase.getReclamoById(id);
 
         if (reclamo.idUsuarioCreador === usuario.idUsuario && reclamo.idReclamoEstado === 1) {
-            return await this.updateReclamo(id, { idReclamoEstado : 3 })
+            const fechaActual = new Date();
+            return await this.updateReclamo(id, { 
+                idReclamoEstado : 3,
+                fechaCancelado: fechaActual,
+                fechaFinalizado: fechaActual,
+                idUsuarioFinalizador: usuario.idUsuario })
         }
 
         return {affectedRows: 0};
@@ -75,7 +84,6 @@ export default class ReclamosService {
 
     cambiarEstadoReclamo = async (usuario, id, idReclamoEstado) => {
         const usuariosService = new UsuariosService();
-        const oficinasService = new OficinasServices();
         
         const reclamo = await this.reclamosDatabase.getReclamoById(id);
         const oficinas = await usuariosService.getOficinasUsuarioById(usuario.idUsuario);

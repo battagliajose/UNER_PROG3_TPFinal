@@ -107,7 +107,7 @@ export default class ReclamosDatabase {
                                 LEFT JOIN usuarios as uf ON r.idUsuarioFinalizador = uf.idUsuario
                                 WHERE r.idReclamoTipo = ?`;
             const [result] = await pool.query(query, [idReclamoTipo]);
-            return result[0];
+            return result;
         } catch (error) {
             console.error(error);
             throw error;

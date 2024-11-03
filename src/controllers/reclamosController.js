@@ -18,9 +18,10 @@ export default class ReclamosController {
     }
 
     getReclamoById = async (req, res) => {
-        const { id } = req.params;
         try {
-            const result = await this.reclamosService.getReclamoById(id);
+            const { id } = req.params;
+            const usuario = req.user;
+            const result = await this.reclamosService.getReclamoById(usuario, id);
             if (result.length === 0) {
                 return res.status(404).json({ error: 'Reclamo no encontrado' });
             }
