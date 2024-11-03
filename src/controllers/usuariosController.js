@@ -47,13 +47,12 @@ export default class UsuariosController {
 
     addEmpleado = async (req, res) => {
         const {nombre, apellido, correoElectronico, contrasenia, imagen} = req.body;
-        // ** FALTA AGREGAR LA ASOCIACION EMPLEADO-OFICINA (tabla usuarios_oficinas) **//
         const idUsuarioTipo = 2;
         const activo = 1;
 
         try {
             const result = await this.usuariosService.addUsuario({nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo});
-            res.status(201).json({ id: result.insertId, nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo });
+            res.status(201).json({ id: result.id, nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Error al agregar el usuario' });
@@ -61,11 +60,6 @@ export default class UsuariosController {
     };
 
     registrarCliente = async (req, res) => {
-        /* if (req.user != null) {
-            console.error(req.user);
-            res.status(500).json({ error: 'Ud. ya está registrado!' });
-        }*/
-
         const {nombre, apellido, correoElectronico, contrasenia, imagen} = req.body;
         const idUsuarioTipo = 3;
         const activo = 1;

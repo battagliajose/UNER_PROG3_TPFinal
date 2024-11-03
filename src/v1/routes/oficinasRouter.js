@@ -38,6 +38,8 @@ oficinasRouter.get('/', oficinasController.getOficinas);
  */
 oficinasRouter.get('/:id', oficinasController.getOficinaById);
 
+oficinasRouter.post('/:id/empleado', oficinasController.addEmpleadoOficina);
+
 /**
  * @swagger
  * /v1/oficinas:
@@ -117,5 +119,7 @@ oficinasRouter.delete('/:id', oficinasController.deleteOficina);
  *         description: Oficina no encontrada
  */
 oficinasRouter.patch('/:id', oficinasController.updateOficina);
+
+oficinasRouter.delete('/:id/empleado', oficinasController.deleteEmpleadoOficina);
 
 export default oficinasRouter;
