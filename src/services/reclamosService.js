@@ -161,4 +161,10 @@ export default class ReclamosService {
     }
 
 
+
+    getEstadisticas = async () => {
+        return this.reclamosDatabase.getEstadisticas();
+    };
+    
+
 }
