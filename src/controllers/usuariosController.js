@@ -7,8 +7,9 @@ export default class UsuariosController {
     }
     
     getUsuarios = async (req, res) => {
+        const usuario = req.user;
         try {
-            const result = await this.usuariosService.getUsuarios();
+            const result = await this.usuariosService.getUsuarios(usuario);
             res.status(200).json(result);
         } catch (error) {
             console.log(error);
@@ -49,8 +50,10 @@ export default class UsuariosController {
         const {nombre, apellido, correoElectronico, contrasenia, imagen} = req.body;
         const idUsuarioTipo = 2;
         const activo = 1;
-
+        const imagen = req.file ? req.file.filename : null;
+       
         try {
+    
             const result = await this.usuariosService.addUsuario({nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo});
             res.status(201).json({ id: result.id, nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo });
         } catch (error) {
@@ -63,6 +66,7 @@ export default class UsuariosController {
         const {nombre, apellido, correoElectronico, contrasenia, imagen} = req.body;
         const idUsuarioTipo = 3;
         const activo = 1;
+        const imagen = req.file ? req.file.filename : null;
 
         try {
             const result = await this.usuariosService.addUsuario({nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo});
@@ -92,6 +96,10 @@ export default class UsuariosController {
             const { id } = req.params;
             const campos = req.body;
             const usuario = req.user;
+            const imagen = req.file ? req.file.filename : null;
+
+            // agrego la imagen a la variable
+            campos.imagen = imagen;
 
             const result = await this.usuariosService.updateUsuario(usuario, id, campos);
 
