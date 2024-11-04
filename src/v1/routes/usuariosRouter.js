@@ -64,7 +64,7 @@ usuariosRouter.get('/:id/oficinas', autorizarUsuarios([UserTypes.ADMIN]), usuari
 
 /**
  * @swagger
- * /v1/usuarios:
+ * /v1/usuarios/agregarEmpleado:
  *   post:
  *     summary: Agregar un nuevo usuario
  *     tags: [Usuarios]

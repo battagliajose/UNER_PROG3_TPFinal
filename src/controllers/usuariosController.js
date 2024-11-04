@@ -52,7 +52,7 @@ export default class UsuariosController {
         const idUsuarioTipo = 2;
         const activo = 1;
         const imagen = req.file ? req.file.filename : null;
-        
+       
         try {
     
             const result = await this.usuariosService.addUsuario({nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo});

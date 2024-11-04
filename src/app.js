@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import passport from "passport";
 
 //importación del middleware para prevención ataques de fuerza bruta
@@ -47,6 +48,9 @@ app.use(morgan('combined', { stream: process.stdout })); // por consola.
 app.use(express.json());
 app.use(validateContentType);
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/img', express.static(path.join(__dirname, 'img')));
 // Uso de cors para prevencion de Cross-Site Request Forgery (CSRF)
 app.use(cors());
 
