@@ -69,10 +69,14 @@ export default class UsuariosDataBase {
     getOficinasUsuarioById = async (id) => {
         try {
             const query = `SELECT   o.idOficina as id,
-                                    o.nombre as oficina
+                                    o.nombre as oficina,
+                                    o.idReclamoTipo,
+                                    rt.descripcion as ReclamoTipo
                                  FROM oficinas o 
                                  INNER JOIN usuarios_oficinas uo 
                                  ON o.idOficina = uo.idOficina 
+                                 INNER JOIN reclamos_tipo rt
+                                 ON o.idReclamoTipo = rt.idReclamoTipo
                                  WHERE uo.idUsuario = ?;`
             const [result] = await pool.query(query, [id]);
             return result;
@@ -107,6 +111,7 @@ export default class UsuariosDataBase {
 
     // Ver cifrado de contraseña
     updateUsuario = async (id, usuario) => {
+        
         const campos = Object.keys(usuario);
         const valores = campos.map((campo) => usuario[campo]);
         const consulta = `UPDATE usuarios SET ${campos

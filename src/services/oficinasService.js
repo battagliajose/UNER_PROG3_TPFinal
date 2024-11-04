@@ -25,4 +25,12 @@ export default class OficinasServices {
     updateOficina = async (id, oficina) => {
         return this.oficinasDatabase.updateOficina(id, oficina);
     };
+
+    addEmpleadoOficina = async (idOficina, idEmpleado) => {
+        return this.oficinasDatabase.addEmpleadoOficina(idOficina, idEmpleado)  ;
+    };
+
+    deleteEmpleadoOficina = async (idOficina, idEmpleado) => {
+        return this.oficinasDatabase.deleteEmpleadoOficina(idOficina, idEmpleado)  ;
+    };
 }

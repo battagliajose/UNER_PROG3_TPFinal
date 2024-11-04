@@ -1,16 +1,17 @@
 import express from 'express';
 import AuthController from '../../controllers/authController.js';
+import UsuariosController from '../../controllers/usuariosController.js'
 
 import { check } from 'express-validator';
 import { validarCampos } from '../../middlewares/validarCampos.js';
 
 const authRouter = express.Router();
-
 const authController = new AuthController();
+const usuariosController = new UsuariosController();
 
 /**
  * @swagger
- * /auth/login:
+ * /v1/auth/login:
  *   post:
  *     summary: Iniciar sesión
  *     tags: [Login]
@@ -43,7 +44,8 @@ authRouter.post('/login',
         check('contrasenia', 'La contrasenia es requerida!').not().isEmpty(),
         validarCampos
     ], 
-    
     authController.login);
+
+authRouter.post('/registrarCliente', usuariosController.registrarCliente);
 
 export default authRouter;

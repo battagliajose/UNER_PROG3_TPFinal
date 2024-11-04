@@ -13,7 +13,7 @@ const reclamosTipoController = new ReclamosTipoController();
 reclamosTipoRouter
 /**
  * @swagger
- * /reclamostipo:
+ * /v1/reclamostipo:
  *   get:
  *     summary: Obtener todos los tipos de reclamo
  *     tags: [ReclamosTipo]
@@ -24,7 +24,7 @@ reclamosTipoRouter
     .get('/', reclamosTipoController.getReclamosTipo)
  /**
  * @swagger
- * /reclamostipo/{id}:
+ * /v1/reclamostipo/{id}:
  *   get:
  *     summary: Obtener un tipo de reclamo por ID
  *     tags: [ReclamosTipo]
@@ -44,7 +44,7 @@ reclamosTipoRouter
     .get('/:id', reclamosTipoController.getReclamosTipoById)
  /**
  * @swagger
- * /reclamostipo:
+ * /v1/reclamostipo:
  *   post:
  *     summary: Agregar un nuevo tipo de reclamo
  *     tags: [ReclamosTipo]
@@ -66,7 +66,7 @@ reclamosTipoRouter
    
  /**
  * @swagger
- * /reclamostipo/{id}:
+ * /v1/reclamostipo/{id}:
  *   delete:
  *     summary: Eliminar un tipo de reclamo por ID
  *     tags: [ReclamosTipo]
@@ -87,7 +87,7 @@ reclamosTipoRouter
 
  /**
  * @swagger
- * /reclamostipo/{id}:
+ * /v1/reclamostipo/{id}:
  *   patch:
  *     summary: Actualizar un tipo de reclamo por ID
  *     tags: [ReclamosTipo]

@@ -1,5 +1,7 @@
 import express from 'express';
 import UsuariosController from '../../controllers/usuariosController.js';
+import autorizarUsuarios from '../../middlewares/autorizarUsuarios.js';
+import UserTypes from '../../config/userTypes.js';
 
 const usuariosRouter = express.Router();
 
@@ -7,7 +9,7 @@ const usuariosController = new UsuariosController();
 
 /**
  * @swagger
- * /usuarios:
+ * /v1/usuarios:
  *   get:
  *     summary: Obtener todos los usuarios
  *     tags: [Usuarios]
@@ -15,11 +17,11 @@ const usuariosController = new UsuariosController();
  *       200:
  *         description: Lista de usuarios
  */
-usuariosRouter.get('/', usuariosController.getUsuarios);
+usuariosRouter.get('/', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.getUsuarios);
 
 /**
  * @swagger
- * /usuarios/{id}:
+ * /v1/usuarios/{id}:
  *   get:
  *     summary: Obtener un usuario por ID
  *     tags: [Usuarios]
@@ -36,11 +38,11 @@ usuariosRouter.get('/', usuariosController.getUsuarios);
  *       404:
  *         description: Usuario no encontrado
  */
-usuariosRouter.get('/:id', usuariosController.getUsuarioById);
+usuariosRouter.get('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.getUsuarioById);
 
 /**
  * @swagger
- * /usuarios/{id}/oficinas:
+ * /v1/usuarios/{id}/oficinas:
  *   get:
  *     summary: Obtener oficinas de un usuario por ID
  *     tags: [Usuarios]
@@ -57,11 +59,11 @@ usuariosRouter.get('/:id', usuariosController.getUsuarioById);
  *       404:
  *         description: Usuario no encontrado
  */
-usuariosRouter.get('/:id/oficinas', usuariosController.getOficinasUsuarioById);
+usuariosRouter.get('/:id/oficinas', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.getOficinasUsuarioById);
 
 /**
  * @swagger
- * /usuarios:
+ * /v1/usuarios:
  *   post:
  *     summary: Agregar un nuevo usuario
  *     tags: [Usuarios]
@@ -82,11 +84,11 @@ usuariosRouter.get('/:id/oficinas', usuariosController.getOficinasUsuarioById);
  *       201:
  *         description: Usuario creado
  */
-usuariosRouter.post('/', usuariosController.addUsuario);
+usuariosRouter.post('/agregarEmpleado', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.addEmpleado);
 
 /**
  * @swagger
- * /usuarios/{id}:
+ * /v1/usuarios/{id}:
  *   delete:
  *     summary: Eliminar un usuario por ID
  *     tags: [Usuarios]
@@ -103,11 +105,11 @@ usuariosRouter.post('/', usuariosController.addUsuario);
  *       404:
  *         description: Usuario no encontrado
  */
-usuariosRouter.delete('/:id', usuariosController.deleteUsuario);
+usuariosRouter.delete('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.deleteUsuario);
 
 /**
  * @swagger
- * /usuarios/{id}:
+ * /v1/usuarios/{id}:
  *   patch:
  *     summary: Actualizar un usuario por ID
  *     tags: [Usuarios]
@@ -137,6 +139,8 @@ usuariosRouter.delete('/:id', usuariosController.deleteUsuario);
  *       404:
  *         description: Usuario no encontrado
  */
-usuariosRouter.patch('/:id', usuariosController.updateUsuario);
+usuariosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.updateUsuario);
+
+usuariosRouter.patch('/', autorizarUsuarios([UserTypes.ADMIN, UserTypes.EMPLEADO, UserTypes.CLIENTE]), usuariosController.updateUsuario);
 
 export default usuariosRouter;

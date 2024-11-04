@@ -3,7 +3,7 @@ import { pool } from './connectionMySql.js';
 export default class OficinasDatabase {
     getOficinas = async () => {
         try {
-            const query = `SELECT o.idOficina, o.nombre, rt.descripcion, o.activo FROM oficinas as o
+            const query = `SELECT o.idOficina, o.nombre, o.idReclamoTipo, rt.descripcion as ReclamoTipo, o.activo FROM oficinas as o
                             INNER JOIN reclamos_tipo as rt ON o.idReclamoTipo = rt.idReclamoTipo
                             WHERE o.activo`;
             const [result] = await pool.query(query);
@@ -16,7 +16,7 @@ export default class OficinasDatabase {
 
     getOficinaById = async (id) => {
         try {
-            const query = `SELECT o.idOficina, o.nombre, rt.descripcion, o.activo FROM oficinas as o
+            const query = `SELECT o.idOficina, o.nombre, o.idReclamoTipo, rt.descripcion as ReclamoTipo, o.activo FROM oficinas as o
                             INNER JOIN reclamos_tipo as rt ON o.idReclamoTipo = rt.idReclamoTipo
                             WHERE idOficina = ?`;
             const [result] = await pool.query(query, [id]);
@@ -28,10 +28,10 @@ export default class OficinasDatabase {
     };
 
     addOficina = async (nuevaOficina) => {
-        const { nombre, idReclamoTipo, activo } = nuevaOficina;
+        const { nombre, idReclamoTipo } = nuevaOficina;
         try {
-            const query = 'INSERT INTO oficinas (nombre, idReclamoTipo, activo) VALUES (?, ?, ?)';
-            const [result] = await pool.query(query, [nombre, idReclamoTipo, activo]);
+            const query = 'INSERT INTO oficinas (nombre, idReclamoTipo, activo) VALUES (?, ?, 1)';
+            const [result] = await pool.query(query, [nombre, idReclamoTipo]);
             return result;
         } catch (error) {
             console.error(error);
@@ -58,19 +58,43 @@ export default class OficinasDatabase {
         .join(", ")} WHERE idOficina = ?`;
     
         try {
-        const [result] = await pool.query(consulta, [...valores, id]);
-        if (result.affectedRows > 0) {
-            const [oficinaActualizada] = await pool.query(
-            "SELECT * FROM oficinas WHERE idOficina = ?",
-            [id]
-            );
-            return oficinaActualizada[0];
-        } else {
-            return null;
-        }
+            const [result] = await pool.query(consulta, [...valores, id]);
+            if (result.affectedRows > 0) {
+                const [oficinaActualizada] = await pool.query(
+                "SELECT * FROM oficinas WHERE idOficina = ?",
+                [id]
+                );
+                return oficinaActualizada[0];
+            } else {
+                return null;
+            }
         } catch (error) {
-        console.error("Error al actualizar la oficina:", error);
-        throw error;
+            console.error("Error al actualizar la oficina:", error);
+            throw error;
+        }
+    };
+
+    addEmpleadoOficina = async (idOficina, idEmpleado) => {
+        try {
+            const query = 'INSERT INTO usuarios_oficinas (idUsuario, idOficina, activo) VALUES (?, ?, 1)';
+            const [result] = await pool.query(query, [idOficina, idEmpleado]);
+            return result;
+        } catch (error) {
+            console.error("Error al agregar empleado a la oficina: ", error);
+            throw error;
+        }
+    };
+
+    deleteEmpleadoOficina = async (idOficina, idEmpleado) => {
+        try {
+            const query = 'UPDATE usuarios_oficinas SET activo = 0 WHERE  idOficina = ? and  idUsuario = ?';
+            const [result] = await pool.query(query, [idOficina, idEmpleado]);
+            console.log(idOficina, idEmpleado);
+            console.log(result);
+            return result;
+        } catch (error) {
+            console.error("Error al agregar empleado a la oficina: ", error);
+            throw error;
         }
     };
 }

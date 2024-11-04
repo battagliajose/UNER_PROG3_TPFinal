@@ -34,6 +34,7 @@ import { swaggerSetup } from './swagger.js';
 // Importo middleware para asegurar que los usuarios con perfil autorizado
 // puedan llegar a las rutas
 import autorizarUsuarios from './middlewares/autorizarUsuarios.js';
+import UserTypes from './config/userTypes.js';
 
 dotenv.config();
 
@@ -61,13 +62,13 @@ app.use(passport.initialize());
 
 swaggerSetup(app);
 //Routes
-app.use('/v1/oficinas', passport.authenticate('jwt', {session: false}), autorizarUsuarios([1]), oficinasRouter);
-app.use('/v1/usuarios', passport.authenticate('jwt', {session: false}), autorizarUsuarios([1, 3]), usuariosRouter);
-app.use('/v1/usuariosTipo', passport.authenticate('jwt', {session: false}), autorizarUsuarios([1]), usuariosTipoRouter);
-app.use('/v1/usuariosOficinas', passport.authenticate('jwt', {session: false}), autorizarUsuarios([1]), usuariosOficinaRouter);
-app.use('/v1/reclamosestado', passport.authenticate('jwt', {session: false}), autorizarUsuarios([1]), reclamosEstadoRouter );
-app.use('/v1/reclamostipo', passport.authenticate('jwt', {session: false}), autorizarUsuarios([1]), reclamosTipoRouter );
-app.use('/v1/reclamos', passport.authenticate('jwt', {session: false}), autorizarUsuarios([1, 2, 3]), reclamosRouter);
+app.use('/v1/oficinas', passport.authenticate('jwt', {session: false}), autorizarUsuarios([UserTypes.ADMIN]), oficinasRouter);
+app.use('/v1/usuarios', passport.authenticate('jwt', {session: false}), autorizarUsuarios([UserTypes.ADMIN, UserTypes.EMPLEADO, UserTypes.CLIENTE]), usuariosRouter);
+app.use('/v1/usuariosTipo', passport.authenticate('jwt', {session: false}), autorizarUsuarios([UserTypes.ADMIN]), usuariosTipoRouter);
+app.use('/v1/usuariosOficinas', passport.authenticate('jwt', {session: false}), autorizarUsuarios([UserTypes.ADMIN]), usuariosOficinaRouter);
+app.use('/v1/reclamosestado', passport.authenticate('jwt', {session: false}), autorizarUsuarios([UserTypes.ADMIN]), reclamosEstadoRouter );
+app.use('/v1/reclamostipo', passport.authenticate('jwt', {session: false}), autorizarUsuarios([UserTypes.ADMIN]), reclamosTipoRouter );
+app.use('/v1/reclamos', passport.authenticate('jwt', {session: false}), autorizarUsuarios([UserTypes.ADMIN, UserTypes.EMPLEADO, UserTypes.CLIENTE]), reclamosRouter);
 app.use('/v1/auth', authRouter);
 
 const puerto = process.env.PUERTO || 3000;

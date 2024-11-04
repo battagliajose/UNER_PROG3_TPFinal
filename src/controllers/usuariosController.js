@@ -24,7 +24,7 @@ export default class UsuariosController {
             if (result.length === 0) {
                 return res.status(404).json({ error: 'Usuario no encontrado' });
             }
-            res.status(200).json({...result[0], oficinas : oficinas || []});
+            res.status(200).json({...result, oficinas : oficinas || []});
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Error al obtener el usuario' });
@@ -45,16 +45,33 @@ export default class UsuariosController {
         }
     };
 
-    addUsuario = async (req, res) => {
-        const {nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo} = req.body;
+    addEmpleado = async (req, res) => {
+        const {nombre, apellido, correoElectronico, contrasenia, imagen} = req.body;
+        const idUsuarioTipo = 2;
+        const activo = 1;
+
         try {
             const result = await this.usuariosService.addUsuario({nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo});
-            res.status(201).json({ id: result.insertId, nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo });
+            res.status(201).json({ id: result.id, nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Error al agregar el usuario' });
         }
     };
+
+    registrarCliente = async (req, res) => {
+        const {nombre, apellido, correoElectronico, contrasenia, imagen} = req.body;
+        const idUsuarioTipo = 3;
+        const activo = 1;
+
+        try {
+            const result = await this.usuariosService.addUsuario({nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo});
+            res.status(201).json({ id: result.insertId, nombre, apellido, correoElectronico, idUsuarioTipo, imagen, activo });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Error al agregar el usuario' });
+        }
+    }
 
     deleteUsuario = async (req, res) => {
         const { id } = req.params;
@@ -74,14 +91,16 @@ export default class UsuariosController {
         try{
             const { id } = req.params;
             const campos = req.body;
-            const result = await this.usuariosService.updateUsuario(id, campos);
+            const usuario = req.user;
+
+            const result = await this.usuariosService.updateUsuario(usuario, id, campos);
 
             if (result.affectedRows === 0) {
                 return res.status(404).json({
                     mensaje: "No se pudo modificar."    
                 })
             }
-            
+
             res.status(200).json({
                 mensaje: "Usuario modificado"
             });

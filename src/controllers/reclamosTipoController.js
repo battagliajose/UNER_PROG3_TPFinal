@@ -31,11 +31,11 @@ export default class ReclamosTipoController {
     };
 
     addReclamosTipo = async (req, res) => {
-        const { descripcion, activo } = req.body;
+        const { descripcion } = req.body;
         try {
-            const result = await this.reclamosTipoService.addReclamosTipo({descripcion, activo});
+            const result = await this.reclamosTipoService.addReclamosTipo({descripcion});
             if (result.affectedRows > 0) {
-                res.status(201).json({ id: result.insertId, descripcion, activo });
+                res.status(201).json({ id: result.insertId, descripcion });
             } else {
                 res.status(500).json({ error: "No se pudo crear el Reclamo Tipo" });
             }
@@ -62,8 +62,8 @@ export default class ReclamosTipoController {
     updateReclamosTipo = async (req, res) => {
         try{
             const { id } = req.params;
-            const campos = req.body;
-            const result = await this.reclamosTipoService.updateReclamosTipo(id, campos);
+            const { descripcion } = req.body;
+            const result = await this.reclamosTipoService.updateReclamosTipo(id, descripcion);
 
             if (result.affectedRows === 0) {
                 return res.status(404).json({

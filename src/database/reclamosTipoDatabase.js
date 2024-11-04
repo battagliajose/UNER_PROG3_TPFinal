@@ -26,7 +26,7 @@ export default class ReclamosTipoDatabase {
     addReclamosTipo = async (nuevoReclamoTipo) => {
         const { descripcion, activo } = nuevoReclamoTipo;
         try {
-            const query = 'INSERT INTO reclamos_tipo (descripcion, activo) VALUES (?, ?)';
+            const query = 'INSERT INTO reclamos_tipo (descripcion, activo) VALUES (?, 1)';
             const [result] = await pool.query(query, [descripcion, activo]);
             return result;
         } catch (error) {
@@ -46,13 +46,13 @@ export default class ReclamosTipoDatabase {
         }
     };
 
-    updateReclamosTipo = async (id, reclamoTipo) => {
+    updateReclamosTipo = async (id, descripcion) => {
         // Construir la consulta SQL para actualizar los campos específicos
-        const consulta = `UPDATE reclamos_tipo SET descripcion = ?, activo = ? WHERE idReclamoTipo = ?`;
+        const consulta = `UPDATE reclamos_tipo SET descripcion = ? WHERE idReclamoTipo = ?`;
         
         try {
             // Ejecutar la consulta con los valores correspondientes
-            const [result] = await pool.query(consulta, [reclamoTipo.descripcion, reclamoTipo.activo, id]);
+            const [result] = await pool.query(consulta, [descripcion, id]);
             
             // Verificar si se actualizó alguna fila
             if (result.affectedRows > 0) {

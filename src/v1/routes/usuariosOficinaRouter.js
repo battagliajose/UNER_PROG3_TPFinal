@@ -7,7 +7,7 @@ const usuariosOficinasController = new UsuariosOficinasController();
 
 /**
  * @swagger
- * /usuariosoficinas:
+ * /v1/usuariosoficinas:
  *   get:
  *     summary: Obtener todos los usuarios de oficinas
  *     tags: [UsuariosOficinas]
@@ -19,7 +19,7 @@ usuariosOficinasRouter.get('/', usuariosOficinasController.getUsuariosOficinas);
 
 /**
  * @swagger
- * /usuariosoficinas/{id}:
+ * /v1/usuariosoficinas/{id}:
  *   get:
  *     summary: Obtener un usuario de oficina por ID
  *     tags: [UsuariosOficinas]
@@ -40,7 +40,7 @@ usuariosOficinasRouter.get('/:id', usuariosOficinasController.getUsuariosOficina
 
 /**
  * @swagger
- * /usuariosoficinas:
+ * /v1/usuariosoficinas:
  *   post:
  *     summary: Agregar un nuevo usuario de oficina
  *     tags: [UsuariosOficinas]
@@ -65,7 +65,7 @@ usuariosOficinasRouter.post('/', usuariosOficinasController.addUsuariosOficinas)
 
 /**
  * @swagger
- * /usuariosoficinas/{id}:
+ * /v1/usuariosoficinas/{id}:
  *   delete:
  *     summary: Eliminar un usuario de oficina por ID
  *     tags: [UsuariosOficinas]
@@ -86,7 +86,7 @@ usuariosOficinasRouter.delete('/:id', usuariosOficinasController.deleteUsuariosO
 
 /**
  * @swagger
- * /usuariosoficinas/{id}:
+ * /v1/usuariosoficinas/{id}:
  *   patch:
  *     summary: Actualizar un usuario de oficina por ID
  *     tags: [UsuariosOficinas]

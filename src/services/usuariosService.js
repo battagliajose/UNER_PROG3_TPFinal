@@ -1,4 +1,5 @@
 import UsuariosDataBase from "../database/usuariosDatabase.js";
+import crypto from 'crypto';
 
 export default class UsuariosDatabase {
     constructor() {
@@ -29,12 +30,49 @@ export default class UsuariosDatabase {
         return this.usuariosDatabase.deleteUsuario(id);
     };
 
-    updateUsuario = async (id, usuario) => {
-        return this.usuariosDatabase.updateUsuario(id, usuario);
+    updateUsuario = async (usuario, id = null, campos) => {
+        //Control de modificacion si campos viene con contraseñia
+        if(campos.contrasenia) {
+            campos.contrasenia = await this.hashPassword(campos.contrasenia);
+            console.log(campos.contrasenia);
+        }        
+        
+        // Si es admin puede modificar cualquier dato de cualquier usuario
+        if (usuario.idUsuarioTipo === 1 && id != null) {
+            return this.usuariosDatabase.updateUsuario(id, campos);
+        }
+        
+        // Cualquier otro tipo de usuario solo puede modificar su nombre, apellido, correoElectronico, contrasenia o imagen.
+        const camposFiltrados = this.filtrarCampos(campos);
+        return this.usuariosDatabase.updateUsuario(usuario.idUsuario, camposFiltrados);
     };
 
     validateUsuarioByMail = async (correoElectronico, contrasenia) => {
         return this.usuariosDatabase.validateUsuarioByMail(correoElectronico, contrasenia);
     }; 
+
+    hashPassword = async (contrasenia) => {       
+        return await crypto.createHash('sha256').update(contrasenia).digest('hex');
+    };
+
+    filtrarCampos (campos) {
+        const camposPermitidos = {
+            nombre: null,
+            apellido: null,
+            correoElectronico: null,
+            contrasenia: null,
+            imagen: null
+        };
+
+        const camposFiltrados = {};
+
+        for (const clave in camposPermitidos) {
+            if (campos.hasOwnProperty(clave)) {
+                camposFiltrados[clave] = campos[clave];
+            }
+          }
+        
+        return camposFiltrados;
+    }
 
 }

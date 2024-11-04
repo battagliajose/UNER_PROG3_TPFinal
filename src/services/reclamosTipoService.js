@@ -46,7 +46,7 @@ export default class ReclamosTipoService {
      * @param {Object} reclamosTipo - Nuevos datos para el tipos de reclamos.
      * @returns {Promise<Object>} Resultado de la operación.
      */
-    updateReclamosTipo = async (id, reclamosTipo) => {
-        return this.reclamosTipoDatabase.updateReclamosTipo(id, reclamosTipo);
+    updateReclamosTipo = async (id, descripcion) => {
+        return this.reclamosTipoDatabase.updateReclamosTipo(id, descripcion);
     }
 }

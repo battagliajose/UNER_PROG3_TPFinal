@@ -31,11 +31,11 @@ export default class OficinasController {
     };
 
     addOficina = async (req, res) => {
-        const { nombre, idReclamoTipo, activo } = req.body;
+        const { nombre, idReclamoTipo } = req.body;
         try {
-            const result = await this.oficinasService.addOficina({nombre, idReclamoTipo, activo});
+            const result = await this.oficinasService.addOficina({ nombre, idReclamoTipo });
             if (result.affectedRows > 0) {
-                res.status(201).json({ id: result.insertId, nombre, idReclamoTipo, activo });
+                res.status(201).json({ id: result.insertId, nombre, idReclamoTipo});
             } else {
                 res.status(500).json({ error: "No se pudo crear la oficina" });
             }
@@ -79,6 +79,37 @@ export default class OficinasController {
             res.status(500).json({
                 mensaje: "Error interno."
             })
+        }
+    };
+
+    addEmpleadoOficina = async (req, res) => {
+        const { id } = req.params;
+        const { idEmpleado } = req.body;
+        try {
+            const result = await this.oficinasService.addEmpleadoOficina(id, idEmpleado);
+            if (result.affectedRows > 0) {
+                res.status(201).json({ mensaje: 'Empleado agregado a la oficina'});
+            } else {
+                res.status(500).json({ error: "No se pudo agregar el empleado a la oficina" });
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Error al agregar a la oficina' });
+        }
+    };
+
+    deleteEmpleadoOficina = async (req, res) => {
+        const { id } = req.params;
+        const { idEmpleado } = req.body;
+        try {
+            const result = await this.oficinasService.deleteEmpleadoOficina(id, idEmpleado);
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ error: 'No se pudo eliminar el empleado de la oficina' });
+            }
+            res.status(200).json({ message: 'Empleado eliminado de la oficina' });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Error al eliminar de la oficina' });
         }
     };
 }
