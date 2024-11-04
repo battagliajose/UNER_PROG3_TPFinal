@@ -2,36 +2,46 @@ import { pool } from './connectionMySql.js';
 
 export default class ReclamosDatabase {
 
-    getReclamos = async () => {
+    getReclamos = async (limit = 0, offset = 0) => {
         try {
-            const query = `SELECT   r.idReclamo,
+            let query = `SELECT   r.idReclamo,
                                     r.asunto,
                                     r.descripcion,
                                     r.fechaCreado,
                                     r.fechaFinalizado,
                                     r.fechaCancelado,
-                                    re.descripcion,
-                                    rt.descripcion,
+                                    re.descripcion AS EstadoDescripcion,
+                                    rt.descripcion AS TipoDescripcion,
                                     r.idUsuarioCreador,
                                     uc.nombre AS CreadorUsuario,
                                     uf.nombre AS FinalizaUsuario
-                                FROM reclamos as r
-                                LEFT JOIN reclamos_estado as re ON r.idReclamoEstado = re.idReclamoEstado
-                                LEFT JOIN reclamos_tipo as rt ON r.idReclamoTipo = rt.idReclamoTipo
-                                LEFT JOIN usuarios as uc ON r.idUsuarioCreador = uc.idUsuario 
-                                LEFT JOIN usuarios as uf ON r.idUsuarioFinalizador = uf.idUsuario`;
-            const [result] = await pool.query(query);
+                        FROM reclamos AS r
+                        LEFT JOIN reclamos_estado AS re ON r.idReclamoEstado = re.idReclamoEstado
+                        LEFT JOIN reclamos_tipo AS rt ON r.idReclamoTipo = rt.idReclamoTipo
+                        LEFT JOIN usuarios AS uc ON r.idUsuarioCreador = uc.idUsuario 
+                        LEFT JOIN usuarios AS uf ON r.idUsuarioFinalizador = uf.idUsuario`;
+
+            // Agrega LIMIT y OFFSET si son válidos
+            if (limit > 0 && offset >= 0) {
+                query += ' LIMIT ? OFFSET ?'; 
+            }
+
+            // Ejecutar la consulta
+            const params = (limit > 0 && offset >= 0) ? [limit, offset] : [];
+            const [result] = await pool.query(query, params);
             return result;
         } catch (error) {
-            console.log(error);
+            console.error('Error en SQL:', error);
             throw error;
         }
+
     }
 
-    getReclamosByUser = async (usuario) => {
+
+    getReclamosByUser = async (limit = 0, offset = 0 ,usuario) => {
         try {
             const idUsuario = usuario.idUsuario;
-            const query = `SELECT   r.idReclamo,
+            let query = `SELECT   r.idReclamo,
                                     r.asunto,
                                     r.descripcion,
                                     r.fechaCreado,
@@ -48,7 +58,13 @@ export default class ReclamosDatabase {
                                 LEFT JOIN usuarios as uc ON r.idUsuarioCreador = uc.idUsuario 
                                 LEFT JOIN usuarios as uf ON r.idUsuarioFinalizador = uf.idUsuario
                                 WHERE idUsuarioCreador = ?`;
-            const [result] = await pool.query(query, [idUsuario]);
+                       
+             
+            if (limit) {
+                query += 'LIMIT ? OFFSET ? ';
+                       }                         
+
+            const [result] = await pool.query(query, [limit, offset, usuario]);
             return result;
         } catch (error) {
             console.log(error);

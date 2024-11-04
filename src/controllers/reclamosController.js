@@ -10,9 +10,19 @@ export default class ReclamosController {
     }
 
     getReclamos = async (req, res) => {
-        try {
+
+        //Paginación
+        const limit = req.query.limit;
+        const offset = req.query.offset;
+
+        try{
+            //Si limit y offset no están definidos no se realiza la paginación            
+            let pLimit = limit ? Number(limit) : 0;
+            let pOffset = offset ? Number(offset) : 0;
+            
+        
             const usuario = req.user;
-            const result = await this.reclamosService.getReclamos(usuario);
+            const result = await this.reclamosService.getReclamos(pLimit, pOffset, usuario);
             res.status(200).json(result);
         } catch (error) {
             console.log(error);

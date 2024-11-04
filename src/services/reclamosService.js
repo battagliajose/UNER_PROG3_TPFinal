@@ -13,10 +13,10 @@ export default class ReclamosService {
     }
     
 
-    getReclamos = async (usuario) => {
+    getReclamos = async (limit, offset, usuario) => {
         if (usuario.idUsuarioTipo === 1) { // ADMIN
             // Devuelve todos los reclamos
-            return this.reclamosDatabase.getReclamos();
+            return this.reclamosDatabase.getReclamos(limit, offset);
         }
 
         if (usuario.idUsuarioTipo === 2) { // EMPLEADO
@@ -27,7 +27,7 @@ export default class ReclamosService {
             let reclamos = [];
 
             for (const oficina of oficinas) {
-                const reclamosOficina = await this.reclamosDatabase.getReclamosByTipo(oficina.idReclamoTipo);
+                const reclamosOficina = await this.reclamosDatabase.getReclamosByTipo(limit, offset, oficina.idReclamoTipo);
                 reclamos = reclamos.concat(reclamosOficina);
             }
 
@@ -36,7 +36,7 @@ export default class ReclamosService {
 
         if (usuario.idUsuarioTipo === 3) { // CLIENTE
             // Devuelve los reclamos del usuario
-            return this.reclamosDatabase.getReclamosByUser(usuario);
+            return this.reclamosDatabase.getReclamosByUser(limit, offset, usuario);
         }
 
         return {affectedRows: 0};
