@@ -100,10 +100,7 @@ export default class ReclamosService {
     }
 
     getEstadisticas = async () => {
-        if (usuario.idUsuarioTipo === 1) { // ADMIN
-            // Devuelve todos los reclamos
-            return this.reclamosDatabase.getEstadisticas();
-        } 
+        return this.reclamosDatabase.getEstadisticas();
     };
     
 
