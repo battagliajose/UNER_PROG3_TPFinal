@@ -137,22 +137,29 @@ usuariosRouter.delete('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosCont
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/from-data:
  *           schema:
  *             type: object
  *             properties:
  *               nombre:
  *                 type: string
  *                 description: Nombre del usuario
- *               email:
+ *               apellido:
  *                 type: string
- *                 description: Correo electrónico del usuario
+ *                 description: Apellido del usuario
+ *               contrasenia:
+ *                 type: string
+ *                 description: Contraseña del usuario
+ *               imagen:
+ *                 type: string
+ *                 format: binary 
+ *                 description: Imagen del usuario
  *     responses:
  *       200:
  *         description: Usuario actualizado
  *       404:
  *         description: Usuario no encontrado
  */
-usuariosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN, UserTypes.CLIENTE]), usuariosController.updateUsuario);
+usuariosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN, UserTypes.CLIENTE]),upload.single('imagen') ,usuariosController.updateUsuario);
 
 export default usuariosRouter;

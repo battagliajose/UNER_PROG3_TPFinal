@@ -70,9 +70,10 @@ export default class UsuariosController {
             res.status(500).json({ error: 'Ud. ya está registrado!' });
         }*/
 
-        const {nombre, apellido, correoElectronico, contrasenia, imagen} = req.body;
+        const {nombre, apellido, correoElectronico, contrasenia} = req.body;
         const idUsuarioTipo = 3;
         const activo = 1;
+        const imagen = req.file ? req.file.filename : null;
 
         try {
             const result = await this.usuariosService.addUsuario({nombre, apellido, correoElectronico, contrasenia, idUsuarioTipo, imagen, activo});
@@ -102,6 +103,10 @@ export default class UsuariosController {
             const { id } = req.params;
             const campos = req.body;
             const usuario = req.user;
+            const imagen = req.file ? req.file.filename : null;
+
+            // agrego la imagen a la variable
+            campos.imagen = imagen;
 
             const result = await this.usuariosService.updateUsuario(usuario, id, campos);
 
