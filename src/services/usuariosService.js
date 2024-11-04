@@ -42,7 +42,7 @@ export default class UsuariosDatabase {
             return this.usuariosDatabase.updateUsuario(id, campos);
         }
         
-        // Cualquier otro tipo de usuario solo puede modificar su nombre, apellido, correoElectronico o contrasenia.
+        // Cualquier otro tipo de usuario solo puede modificar su nombre, apellido, correoElectronico, contrasenia o imagen.
         const camposFiltrados = this.filtrarCampos(campos);
         return this.usuariosDatabase.updateUsuario(usuario.idUsuario, camposFiltrados);
     };
@@ -61,6 +61,7 @@ export default class UsuariosDatabase {
             apellido: null,
             correoElectronico: null,
             contrasenia: null,
+            imagen: null
         };
 
         const camposFiltrados = {};
