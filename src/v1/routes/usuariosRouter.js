@@ -2,6 +2,7 @@ import express from 'express';
 import UsuariosController from '../../controllers/usuariosController.js';
 import autorizarUsuarios from '../../middlewares/autorizarUsuarios.js';
 import UserTypes from '../../config/userTypes.js';
+import upload from '../../config/multer.js';
 
 const usuariosRouter = express.Router();
 
@@ -17,7 +18,7 @@ const usuariosController = new UsuariosController();
  *       200:
  *         description: Lista de usuarios
  */
-usuariosRouter.get('/', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.getUsuarios);
+usuariosRouter.get('/', autorizarUsuarios([UserTypes.ADMIN, UserTypes.CLIENTE]), usuariosController.getUsuarios);
 
 /**
  * @swagger
@@ -63,28 +64,41 @@ usuariosRouter.get('/:id/oficinas', autorizarUsuarios([UserTypes.ADMIN]), usuari
 
 /**
  * @swagger
- * /v1/usuarios:
+ * /v1/usuarios/agregarEmpleado:
  *   post:
  *     summary: Agregar un nuevo usuario
  *     tags: [Usuarios]
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data: 
  *           schema:
  *             type: object
  *             properties:
  *               nombre:
  *                 type: string
  *                 description: Nombre del usuario
- *               email:
+ *               apellido:
+ *                 type: string
+ *                 description: Apellido del usuario
+ *               correoElectronico:
  *                 type: string
  *                 description: Correo electrónico del usuario
+ *               contrasenia:
+ *                 type: string
+ *                 description: Contraseña del usuario
+ *               imagen:
+ *                 type: string
+ *                 format: binary 
+ *                 description: Imagen del usuario
  *     responses:
  *       201:
- *         description: Usuario creado
+ *         description: Usuario creado exitosamente
+ *       500:
+ *         description: Error al crear el usuario
  */
-usuariosRouter.post('/agregarEmpleado', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.addEmpleado);
+
+usuariosRouter.post('/agregarEmpleado', autorizarUsuarios([UserTypes.ADMIN]),upload.single('imagen'), usuariosController.addEmpleado);
 
 /**
  * @swagger
@@ -123,24 +137,70 @@ usuariosRouter.delete('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosCont
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/from-data:
  *           schema:
  *             type: object
  *             properties:
  *               nombre:
  *                 type: string
  *                 description: Nombre del usuario
- *               email:
+ *               apellido:
  *                 type: string
- *                 description: Correo electrónico del usuario
+ *                 description: Apellido del usuario
+ *               contrasenia:
+ *                 type: string
+ *                 description: Contraseña del usuario
+ *               imagen:
+ *                 type: string
+ *                 format: binary 
+ *                 description: Imagen del usuario
  *     responses:
  *       200:
  *         description: Usuario actualizado
  *       404:
  *         description: Usuario no encontrado
  */
-usuariosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.updateUsuario);
+usuariosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN]),upload.single('imagen') ,usuariosController.updateUsuario);
 
-usuariosRouter.patch('/', autorizarUsuarios([UserTypes.ADMIN, UserTypes.EMPLEADO, UserTypes.CLIENTE]), usuariosController.updateUsuario);
+/**
+ * @swagger
+ * /v1/usuarios/{id}:
+ *   patch:
+ *     summary: Actualizar perfil
+ *     tags: [Usuarios]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID del usuario
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/from-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *                 description: Nombre del usuario
+ *               apellido:
+ *                 type: string
+ *                 description: Apellido del usuario
+ *               contrasenia:
+ *                 type: string
+ *                 description: Contraseña del usuario
+ *               imagen:
+ *                 type: string
+ *                 format: binary 
+ *                 description: Imagen del usuario
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado
+ *       404:
+ *         description: Usuario no encontrado
+ */
+usuariosRouter.patch('/', autorizarUsuarios([UserTypes.ADMIN, UserTypes.EMPLEADO, UserTypes.CLIENTE]), upload.single('imagen') ,usuariosController.updateUsuario);
 
 export default usuariosRouter;
