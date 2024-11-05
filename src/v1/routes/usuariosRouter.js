@@ -160,8 +160,47 @@ usuariosRouter.delete('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosCont
  *       404:
  *         description: Usuario no encontrado
  */
-usuariosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN]), usuariosController.updateUsuario);
+usuariosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN]),upload.single('imagen') ,usuariosController.updateUsuario);
 
+/**
+ * @swagger
+ * /v1/usuarios/{id}:
+ *   patch:
+ *     summary: Actualizar perfil
+ *     tags: [Usuarios]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID del usuario
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/from-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *                 description: Nombre del usuario
+ *               apellido:
+ *                 type: string
+ *                 description: Apellido del usuario
+ *               contrasenia:
+ *                 type: string
+ *                 description: Contraseña del usuario
+ *               imagen:
+ *                 type: string
+ *                 format: binary 
+ *                 description: Imagen del usuario
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado
+ *       404:
+ *         description: Usuario no encontrado
+ */
 usuariosRouter.patch('/', autorizarUsuarios([UserTypes.ADMIN, UserTypes.EMPLEADO, UserTypes.CLIENTE]), upload.single('imagen') ,usuariosController.updateUsuario);
 
 export default usuariosRouter;

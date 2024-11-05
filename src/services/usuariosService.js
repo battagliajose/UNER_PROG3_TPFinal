@@ -41,13 +41,22 @@ export default class UsuariosDatabase {
     updateUsuario = async (usuario, id = null, campos) => {
         //Control de modificacion si campos viene con contraseñia
         if(campos.contrasenia) {
-            campos.contrasenia = await this.hashPassword(campos.contrasenia);
-            console.log(campos.contrasenia);
+            campos.contrasenia = await this.hashPassword(campos.contrasenia);           
         }        
-        
-        // Si es admin puede modificar cualquier dato de cualquier usuario
+       // Si es admin puede modificar cualquier dato de cualquier empleado
         if (usuario.idUsuarioTipo === 1 && id != null) {
-            return this.usuariosDatabase.updateUsuario(id, campos);
+            const usuarioAModificar = await this.usuariosDatabase.getUsuarioById(usuario.idUsuario);
+            
+            if(usuarioAModificar!=null){    
+                if ( usuarioAModificar.idUsuarioTipo != 2 ) {
+                    return this.usuariosDatabase.updateUsuario(id, campos);
+                } else {
+                    return { affectedRows: 0,
+                            msg:"UsuarioTipoCliente"
+                        };
+                }                 
+            }
+            return {affectedRows :0}
         }
         
         // Cualquier otro tipo de usuario solo puede modificar su nombre, apellido, correoElectronico, contrasenia o imagen.

@@ -47,7 +47,7 @@ export default class UsuariosController {
     };
 
     addEmpleado = async (req, res) => {
-        const {nombre, apellido, correoElectronico, contrasenia, imagen} = req.body;
+        const {nombre, apellido, correoElectronico, contrasenia} = req.body;
         const idUsuarioTipo = 2;
         const activo = 1;
         const imagen = req.file ? req.file.filename : null;
@@ -63,7 +63,7 @@ export default class UsuariosController {
     };
 
     registrarCliente = async (req, res) => {
-        const {nombre, apellido, correoElectronico, contrasenia, imagen} = req.body;
+        const {nombre, apellido, correoElectronico, contrasenia} = req.body;
         const idUsuarioTipo = 3;
         const activo = 1;
         const imagen = req.file ? req.file.filename : null;
@@ -92,28 +92,49 @@ export default class UsuariosController {
     };
 
     updateUsuario = async (req, res) => {
-        try{
+        
+        try{            
             const { id } = req.params;
             const campos = req.body;
             const usuario = req.user;
-            const imagen = req.file ? req.file.filename : null;
-
+            const img = req.file ? req.file.filename : null;
+            
+            //usuario id
+            let UsuarioID;
+           
+            if(!id){
+                UsuarioID=usuario.idUsuario        
+            }else{
+                UsuarioID=id;
+            }
             // agrego la imagen a la variable
-            campos.imagen = imagen;
+            campos.imagen = img;
+            
+            const result = await this.usuariosService.updateUsuario(usuario, UsuarioID, campos);
 
-            const result = await this.usuariosService.updateUsuario(usuario, id, campos);
 
             if (result.affectedRows === 0) {
+                
+                if (result.msg=="UsuarioTipoCliente"){
+
+                    return res.status(401).json({
+                      mesaje: "Un administrador no esta autorizado a modificar a un CLIENTE."  
+                    })
+                }            
                 return res.status(404).json({
-                    mensaje: "No se pudo modificar."    
+                    mensaje: "No se pudo modificar." 
                 })
+               
             }
+
+
 
             res.status(200).json({
                 mensaje: "Usuario modificado"
             });
 
         }catch(error){
+            console.log(error);
             res.status(500).json({
                 mensaje: "Error interno."
             })
