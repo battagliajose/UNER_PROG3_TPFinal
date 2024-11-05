@@ -5,7 +5,7 @@ import cors from 'cors';
 // Configuración de CORS
 const corsOptions = {
     origin: 'http://localhost:3000', //Origen de permitido (servidor)
-    methods: 'GET,HEAD,PATCH,POST,DELETE', // Métodos permitidos    
+    methods: 'GET,PATCH,POST,DELETE,PUT', // Métodos permitidos    
     optionsSuccessStatus: 204 // Para navegadores antiguos
 };
 
