@@ -99,17 +99,6 @@ export default class UsuariosController {
             const usuario = req.user;
             const img = req.file ? req.file.filename : null;
             
-            console.log(campos);
-            /*//usuario id
-            let UsuarioID;
-           
-            if(!id){
-                UsuarioID=usuario.idUsuario        
-            }else{
-                UsuarioID=id;
-            }*/
-
-            // agrego la imagen a la variable
             campos.imagen = img;
             
             const result = await this.usuariosService.updateUsuario(usuario, id, campos);
