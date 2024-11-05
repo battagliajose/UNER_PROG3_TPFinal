@@ -15,7 +15,7 @@ import helmet from 'helmet'
 
 //importación de middleware para prevenir prevenir ataque: 
 // - Cross-Site Request Forgery (CSRF)
-import cors from 'cors';
+import corsMiddleware from './middlewares/corsMiddleware.js';
 
 import oficinasRouter from './v1/routes/oficinasRouter.js';
 import usuariosRouter from './v1/routes/usuariosRouter.js';
@@ -48,7 +48,7 @@ app.use(express.json());
 app.use(validateContentType);
 
 // Uso de cors para prevencion de Cross-Site Request Forgery (CSRF)
-app.use(cors());
+app.use(corsMiddleware);
 
 // Uso de Helmet para prevención xss & clickjacking
 app.use(helmet());
