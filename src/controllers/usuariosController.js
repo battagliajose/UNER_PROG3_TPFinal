@@ -112,7 +112,6 @@ export default class UsuariosController {
             
             const result = await this.usuariosService.updateUsuario(usuario, UsuarioID, campos);
 
-
             if (result.affectedRows === 0) {
                 
                 if (result.msg=="UsuarioTipoCliente"){
@@ -120,14 +119,13 @@ export default class UsuariosController {
                     return res.status(401).json({
                       mesaje: "Un administrador no esta autorizado a modificar a un CLIENTE."  
                     })
-                }            
+                } 
+
                 return res.status(404).json({
                     mensaje: "No se pudo modificar." 
                 })
                
             }
-
-
 
             res.status(200).json({
                 mensaje: "Usuario modificado"
