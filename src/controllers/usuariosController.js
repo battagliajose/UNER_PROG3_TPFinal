@@ -95,10 +95,11 @@ export default class UsuariosController {
         
         try{            
             const { id } = req.params;
-            const campos = req.body;
+            const campos = { ...req.body }
             const usuario = req.user;
             const img = req.file ? req.file.filename : null;
             
+            console.log(campos);
             /*//usuario id
             let UsuarioID;
            
