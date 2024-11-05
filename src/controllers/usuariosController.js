@@ -99,18 +99,19 @@ export default class UsuariosController {
             const usuario = req.user;
             const img = req.file ? req.file.filename : null;
             
-            //usuario id
+            /*//usuario id
             let UsuarioID;
            
             if(!id){
                 UsuarioID=usuario.idUsuario        
             }else{
                 UsuarioID=id;
-            }
+            }*/
+
             // agrego la imagen a la variable
             campos.imagen = img;
             
-            const result = await this.usuariosService.updateUsuario(usuario, UsuarioID, campos);
+            const result = await this.usuariosService.updateUsuario(usuario, id, campos);
 
             if (result.affectedRows === 0) {
                 
@@ -124,14 +125,13 @@ export default class UsuariosController {
                 return res.status(404).json({
                     mensaje: "No se pudo modificar." 
                 })
-               
             }
 
             res.status(200).json({
                 mensaje: "Usuario modificado"
             });
 
-        }catch(error){
+        }catch ( error ){
             console.log(error);
             res.status(500).json({
                 mensaje: "Error interno."
