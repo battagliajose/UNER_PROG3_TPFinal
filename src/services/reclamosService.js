@@ -64,7 +64,7 @@ export default class ReclamosService {
                 const mailService = new MailService();
                 const usuariosService = new UsuariosService();
 
-                const usuario = await usuariosService.getUsuarioByName(reclamoModificado.CreadorUsuario);
+                const usuario = await usuariosService.getUsuarioById(reclamoModificado.idUsuarioCreador);
                 await mailService.enviarMail(reclamoModificado, usuario.correoElectronico);
             };
         }
