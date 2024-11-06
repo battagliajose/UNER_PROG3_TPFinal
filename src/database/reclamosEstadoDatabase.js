@@ -24,10 +24,10 @@ export default class ReclamosEstadoDatabase {
     };
 
     addReclamosEstado = async (nuevoReclamoEstado) => {
-        const { descripcion, activo } = nuevoReclamoEstado;
+        const { descripcion } = nuevoReclamoEstado;
         try {
-            const query = 'INSERT INTO reclamos_estado (descripcion, activo) VALUES (?, ?)';
-            const [result] = await pool.query(query, [descripcion, activo]);
+            const query = 'INSERT INTO reclamos_estado (descripcion, activo) VALUES (?, 1)';
+            const [result] = await pool.query(query, [descripcion]);
             return result;
         } catch (error) {
             console.error(error);

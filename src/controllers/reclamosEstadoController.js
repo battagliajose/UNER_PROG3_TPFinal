@@ -31,11 +31,11 @@ export default class ReclamosEstadoController {
     };
 
     addReclamosEstado = async (req, res) => {
-        const { descripcion, activo } = req.body;
+        const { descripcion } = req.body;
         try {
-            const result = await this.reclamosEstadoService.addReclamosEstado({descripcion, activo});
+            const result = await this.reclamosEstadoService.addReclamosEstado({descripcion});
             if (result.affectedRows > 0) {
-                res.status(201).json({ id: result.insertId, descripcion, activo });
+                res.status(201).json({ id: result.insertId, descripcion });
             } else {
                 res.status(500).json({ error: "No se pudo crear el Reclamo Estado" });
             }
