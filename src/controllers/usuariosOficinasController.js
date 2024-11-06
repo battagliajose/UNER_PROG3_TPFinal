@@ -31,11 +31,11 @@ export default class usuariosOficinasController {
     };
 
     addUsuariosOficinas = async (req, res) => {
-        const { idUsuario, idOficina ,activo } = req.body;
+        const { idUsuario, idOficina } = req.body;
         try {
-            const result = await this.usuariosOficinasService.addUsuariosOficinas({idUsuario, idOficina ,activo});
+            const result = await this.usuariosOficinasService.addUsuariosOficinas({idUsuario, idOficina});
             if (result.affectedRows > 0) {
-                res.status(201).json({ id: result.insertId, idUsuario, idOficina ,activo });
+                res.status(201).json({ id: result.insertId, idUsuario, idOficina });
             } else {
                 res.status(500).json({ error: "No se pudo crear la oficina" });
             }

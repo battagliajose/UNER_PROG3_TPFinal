@@ -62,7 +62,7 @@ export default class ReclamosDatabase {
              
             if (limit) {
                 query += 'LIMIT ? OFFSET ? ';
-                       }                         
+            }                         
 
             const [result] = await pool.query(query, [idUsuario, limit, offset]);
             console.log(result);

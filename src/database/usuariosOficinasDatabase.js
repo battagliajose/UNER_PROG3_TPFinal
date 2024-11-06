@@ -4,7 +4,7 @@ export default class UsuariosOficinasDatabase {
     getUsuariosOficinas = async () => {
         try {
             const query = `SELECT 
-                        uo.idUsuarioOficina, u.nombre, o.nombre AS nombreOficina, uo.activo FROM usuarios_oficinas AS uo 
+                        uo.idUsuarioOficina, uo.idUsuario, u.nombre, uo.idOficina, o.nombre AS nombreOficina, uo.activo FROM usuarios_oficinas AS uo 
                         INNER JOIN  usuarios u ON uo.idUsuario = u.idUsuario 
                         INNER JOIN  oficinas o ON uo.idOficina = o.idOficina 
                         WHERE  u.activo`;
@@ -19,7 +19,7 @@ export default class UsuariosOficinasDatabase {
     getUsuariosOficinasId = async (id) => {
         try {
             const query = `SELECT 
-                        uo.idUsuarioOficina, u.nombre, o.nombre AS nombreOficina, uo.activo FROM usuarios_oficinas AS uo 
+                        uo.idUsuarioOficina, uo.idUsuario, u.nombre, uo.idOficina, o.nombre AS nombreOficina, uo.activo FROM usuarios_oficinas AS uo 
                         INNER JOIN  usuarios u ON uo.idUsuario = u.idUsuario 
                         INNER JOIN  oficinas o ON uo.idOficina = o.idOficina 
                         WHERE 
@@ -33,10 +33,10 @@ export default class UsuariosOficinasDatabase {
     };
 
     addUsuariosOficinas = async (nuevoUsuarioOficina) => {
-        const { idUsuario, idOficina ,activo } = nuevoUsuarioOficina;
+        const { idUsuario, idOficina } = nuevoUsuarioOficina;
         try {
-            const query = 'INSERT INTO usuarios_oficinas (idUsuario, idOficina, activo) VALUES (?, ?, ?)';
-            const [result] = await pool.query(query, [idUsuario,idOficina, activo]);
+            const query = 'INSERT INTO usuarios_oficinas (idUsuario, idOficina, activo) VALUES (?, ?, 1)';
+            const [result] = await pool.query(query, [idUsuario, idOficina]);
             return result;
         } catch (error) {
             console.error(error);
