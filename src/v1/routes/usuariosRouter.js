@@ -164,24 +164,17 @@ usuariosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN]),upload.single(
 
 /**
  * @swagger
- * /v1/usuarios/{id}:
+ * /v1/usuarios:
  *   patch:
  *     summary: Actualizar perfil
  *     tags: [Usuarios]
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         description: ID del usuario
- *         schema:
- *           type: integer
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/from-data:
+ *         multipart/form-data:  
  *           schema:
  *             type: object
- *             properties:
+ *             properties:               
  *               nombre:
  *                 type: string
  *                 description: Nombre del usuario
