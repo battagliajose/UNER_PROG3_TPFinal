@@ -77,7 +77,7 @@ export default class OficinasDatabase {
     addEmpleadoOficina = async (idOficina, idEmpleado) => {
         try {
             const query = 'INSERT INTO usuarios_oficinas (idUsuario, idOficina, activo) VALUES (?, ?, 1)';
-            const [result] = await pool.query(query, [idOficina, idEmpleado]);
+            const [result] = await pool.query(query, [idEmpleado, idOficina]);
             return result;
         } catch (error) {
             console.error("Error al agregar empleado a la oficina: ", error);
@@ -89,8 +89,6 @@ export default class OficinasDatabase {
         try {
             const query = 'UPDATE usuarios_oficinas SET activo = 0 WHERE  idOficina = ? and  idUsuario = ?';
             const [result] = await pool.query(query, [idOficina, idEmpleado]);
-            console.log(idOficina, idEmpleado);
-            console.log(result);
             return result;
         } catch (error) {
             console.error("Error al agregar empleado a la oficina: ", error);
