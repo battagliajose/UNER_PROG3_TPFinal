@@ -1,9 +1,0 @@
-
-
-### Actualizar una oficina por ID
-PATCH http://localhost:3000/reclamos/5
-Content-Type: application/json
-
-{
- "idReclamoEstado":4
-}
