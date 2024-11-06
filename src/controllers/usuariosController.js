@@ -82,7 +82,12 @@ export default class UsuariosController {
         try {
             const result = await this.usuariosService.deleteUsuario(id);
             if (result.affectedRows === 0) {
-                return res.status(404).json({ error: 'Usuario no encontrado' });
+                if (result.msg=="UsuarioTipoCliente"){
+                    return res.status(401).json({
+                      mesaje: "Un administrador no puede eliminar a un CLIENTE."  
+                    })
+                } 
+                return res.status(404).json({ error: 'No se pudo eliminar' });
             }
             res.status(200).json({ message: 'Usuario eliminado correctamente' });
         } catch (error) {

@@ -35,7 +35,20 @@ export default class UsuariosDatabase {
     };
 
     deleteUsuario = async (id) => {
-        return this.usuariosDatabase.deleteUsuario(id);
+        const usuarioAEliminar = await this.usuariosDatabase.getUsuarioById(id);
+
+        if (usuarioAEliminar != null) {
+            
+            if ( usuarioAEliminar.idUsuarioTipo == 2 ) {
+                return this.usuariosDatabase.deleteUsuario(id);
+            } else {
+                return { affectedRows: 0,
+                        msg:"UsuarioTipoCliente"
+                };
+            } 
+        }
+
+        return {affectedRows: 0}
     };
 
     updateUsuario = async (usuario, id = null, campos) => {
