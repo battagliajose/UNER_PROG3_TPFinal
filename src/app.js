@@ -30,7 +30,7 @@ import authRouter from './v1/routes/authRouter.js';
 import validateContentType from './middlewares/validateContentType.js';
 import { estrategia, validacion } from "./config/passport.js";
 
-import { swaggerSetup } from './swagger.js';
+import { swaggerSetup } from './config/swagger.js';
 
 // Importo middleware para asegurar que los usuarios con perfil autorizado
 // puedan llegar a las rutas
