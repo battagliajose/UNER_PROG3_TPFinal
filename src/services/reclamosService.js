@@ -27,7 +27,7 @@ export default class ReclamosService {
             let reclamos = [];
 
             for (const oficina of oficinas) {
-                const reclamosOficina = await this.reclamosDatabase.getReclamosByTipo(limit, offset, oficina.idReclamoTipo);
+                const reclamosOficina = await this.reclamosDatabase.getReclamosByTipo( oficina.idReclamoTipo );
                 reclamos = reclamos.concat(reclamosOficina);
             }
 
