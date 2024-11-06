@@ -4,14 +4,14 @@
 
 ## Trabajo Práctico de Programación 3
     
-### 1º Entrega
+### Entrega Final
     
 ### Integrantes:
 - Luis Sanchez
 - José Battaglia
 - Cristian Seltenreich
 
-### Agregar password del MySQL y guardar como .env
+### Agregar password del MySQL, JWT_SECRET y guardar como .env
 ``` bash
     PUERTO = 3000
     HOST = localhost
