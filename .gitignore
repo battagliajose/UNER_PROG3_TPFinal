@@ -2,4 +2,3 @@ node_modules/
 .env
 access.log
 src/utiles/reclamos.csv
-src/img/
