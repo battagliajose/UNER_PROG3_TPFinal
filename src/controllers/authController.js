@@ -16,7 +16,7 @@ export default class AuthController {
                 if (err) {
                     res.send(err);
                 }
-                const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '5m' });
+                const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '20m' });
                 return res.json({ token });
             });
         })(req, res);
