@@ -47,8 +47,8 @@ export default class ReclamosDatabase {
                                     r.fechaCreado,
                                     r.fechaFinalizado,
                                     r.fechaCancelado,
-                                    re.descripcion,
-                                    rt.descripcion,
+                                    re.descripcion as descripcionEstado,
+                                    rt.descripcion as descripcionTipo,
                                     r.idUsuarioCreador,
                                     uc.nombre AS CreadorUsuario,
                                     uf.nombre AS FinalizaUsuario
