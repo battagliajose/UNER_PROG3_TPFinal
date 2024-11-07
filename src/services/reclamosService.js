@@ -12,7 +12,6 @@ export default class ReclamosService {
         this.reclamos = this.reclamosDatabase;
     }
     
-
     getReclamos = async (limit, offset, usuario) => {
         if (usuario.idUsuarioTipo === 1) { // ADMIN
             // Devuelve todos los reclamos
@@ -75,6 +74,8 @@ export default class ReclamosService {
     cancelReclamo = async (usuario, id) => {
         const reclamo = await this.reclamosDatabase.getReclamoById(id);
 
+        // Se verifica que el usuario que quiere cancelar sea el mismo que creo el reclamo
+        // y que el reclamo este en estado 'creado'.
         if (reclamo.idUsuarioCreador === usuario.idUsuario && reclamo.idReclamoEstado === 1) {
             const fechaActual = new Date();
             return await this.updateReclamo(id, { 

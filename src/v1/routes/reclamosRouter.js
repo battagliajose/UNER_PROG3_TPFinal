@@ -141,6 +141,6 @@ reclamosRouter.patch('/:id/cambiarEstado', autorizarUsuarios([UserTypes.EMPLEADO
  *       200:
  *         description: Reclamo actualizado
  */
-reclamosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN]), reclamosController.updateReclamo);
+// reclamosRouter.patch('/:id', autorizarUsuarios([UserTypes.ADMIN]), reclamosController.updateReclamo);
 
 export default reclamosRouter;
