@@ -89,10 +89,28 @@ export default class ReclamosService {
 
     cambiarEstadoReclamo = async (usuario, id, idReclamoEstado) => {
         const usuariosService = new UsuariosService();
-        
+
         const reclamo = await this.reclamosDatabase.getReclamoById(id);
         const oficinas = await usuariosService.getOficinasUsuarioById(usuario.idUsuario);
+
         let flagTipoReclamo = false;
+
+        if (reclamo.idReclamoEstado == 3 || reclamo.idReclamoEstado == 4) { // Si está cancelado o finalizado no permite el cambio
+            return {affectedRows: 0};
+        } 
+
+        let nuevoEstado = { idReclamoEstado: idReclamoEstado }
+
+        const fechaActual = new Date();
+
+        if (idReclamoEstado == 4 || idReclamoEstado == 3) { // Finalizado (Agrega fecha de finalizado y usuario finalizador)
+            nuevoEstado.fechaFinalizado = fechaActual;
+            nuevoEstado.idUsuarioFinalizador = usuario.idUsuario;
+        }
+
+        if (idReclamoEstado == 3) { // Cancelado (agrega fecha de cancelación)
+            nuevoEstado.fechaCancelado = fechaActual;
+        }
 
         // Busca en las oficinas del usuario empleado, si alguna atiende el tipo de Reclamo del reclamo
         // al que se le quiere cambiar el estado, en caso de encontrarlo setea el flagTipoReclamo.
@@ -103,10 +121,8 @@ export default class ReclamosService {
             }
         };
 
-        if (flagTipoReclamo) {
-            if (usuario.idUsuarioTipo === 2) {
-                return await this.updateReclamo(id, { idReclamoEstado })
-            }
+        if (flagTipoReclamo && usuario.idUsuarioTipo === 2) {
+            return await this.updateReclamo(id, nuevoEstado)
         }
         
         return {affectedRows: 0};
@@ -118,7 +134,7 @@ export default class ReclamosService {
 
             return await this.reportePdf();
 
-        }else if (formato === 'csv'){
+        } else if (formato === 'csv'){
             
             return await this.reporteCsv();
 
